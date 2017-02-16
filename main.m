@@ -22,7 +22,7 @@ close all
 
 %%%% output folder
 currentfolder = pwd;
-outfolder=[currentfolder,'/output_testsmall'];
+outfolder=[currentfolder,'/output'];
 mkdir(outfolder);
 addpath(outfolder);
 
@@ -35,13 +35,13 @@ addpath(outfolder);
 %%1-define surface
 Ax=0.1;      %oscilation amplitude in x
 fx=1.0;      %oscilation frequency in x 
-Ay=0.1;      %oscilation amplitude in y
+Ay=1.0;      %oscilation amplitude in y
 fy=1.0;      %oscilation frequency in y
 
-surfxmin=-5.0*pi; %surface x-min
-surfxmax=5.0*pi;  %surface x-max
-surfymin=-3.0*pi; %surface y-min
-surfymax=3.0*pi;  %surface y-max
+surfxmin=-15.0*pi; %surface x-min
+surfxmax=15.0*pi;  %surface x-max
+surfymin=-15.0*pi; %surface y-min
+surfymax=15.0*pi;  %surface y-max
 
 
 
@@ -49,20 +49,21 @@ surfymax=3.0*pi;  %surface y-max
 %%2-define particles
 
 %trajectories
-phi=pi/6.0;  %phi = angle wrt x-axis 0 < phi < pi/2
+phi=0.0;  %phi = angle wrt x-axis 0 < phi < pi/2
 dlt=pi/3.0; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
 th=pi-dlt ; %theta =angle wrt +z axis ; pi/2 < theta < pi
 
 %launching area
-initxmin=-2.0*pi; %x-min of initializing ('launching') particles
-initxmax=2.0*pi;  %x-max of initializing particles
-initymin=-1.0*pi; %y-min of initializing particles
-initymax=1.0*pi;  %y-max of initializing particles
+initxmin=-10.0*pi; %x-min of initializing ('launching') particles
+initxmax=10.0*pi;  %x-max of initializing particles
+initymin=-10.0*pi; %y-min of initializing particles
+initymax=10.0*pi;  %y-max of initializing particles
 
 %number of 'particles'
-NP=60000;
-nsteps=1000; %resolution: NP/nsteps = npoints = number of surface grids
+NP=1200000;
+nsteps=6000; %resolution: NP/nsteps = npoints = number of surface grids
 npoints=floor(NP/nsteps);
+
 
 
 %%3-define materials (for Eckstein's fit formula)
