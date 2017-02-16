@@ -10,7 +10,7 @@ locang=0.0; %initialize
 %normalized velocity components = particle trajectory's angle
 %vx=cos(phi)*sin(th); vy=sin(phi)*sin(th); vz=cos(th);
 
-%%zp=z0+vz*t -> t=(z-z0)/vp*cos(th)
+%%zp=z0+vz*t -> t=(z-z0)/cos(th)
 %%xp=x0+vx*t = x0+ cos(phi)*sin(th)*((z-z0)/(cos(th)))=x0+(z-z0)*(cos(phi)*tan(th))
 %%yp=y0+vy*t = y0+ sin(phi)*sin(th)*((z-z0)/(cos(th)))=y0+(z-z0)*(sin(phi)*tan(th));
 
