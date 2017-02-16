@@ -17,7 +17,7 @@ for p = 1:NP
     [x,fxmin]=fminbnd(@(x) zs(x,x,Ax,fx,0,fy),surfxmin,surfxmax);
     [y,fymin]=fminbnd(@(y) zs(y,y,0,fx,Ay,fy),surfymin,surfymax);
     z0=-1.5*min(fxmin,fymin);
-
+    
     %%different options for (x0,y0)
     %%a) random initial position (x0,y0), between (initmin,initmax)
     %rng(0,'twister');
