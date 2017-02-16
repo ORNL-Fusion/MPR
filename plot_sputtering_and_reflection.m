@@ -1,3 +1,6 @@
+%due to the way 3D surface plots auto-read axes from matrices, need to
+%transpose each [x,y] matrix. Do within plot to not double variable names
+
 %%display in this file from S30 on
 S30='plotting reflection and sputtering...';
 disp(S30)
@@ -12,11 +15,11 @@ disp(S34a)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,Y_angle);
+surf(xg,yg,transpose(Y_angle));
 colorbar;
 caxis([0,1]);
 
@@ -36,11 +39,11 @@ disp(S34b)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,Y_loc);
+surf(xg,yg,transpose(Y_loc));
 colorbar;
 caxis([0,max(max(Y_loc))]);
 
@@ -60,11 +63,11 @@ disp(S34c)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,cellNeros);
+surf(xg,yg,transpose(cellNeros));
 colorbar;
 caxis([0,max(max(cellNeros))]);
 
@@ -90,11 +93,11 @@ disp(S34d)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,cellFeros);
+surf(xg,yg,transpose(cellFeros));
 colorbar;
 caxis([0,max(max(cellFeros))]);
 
@@ -120,11 +123,11 @@ disp(S35a)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,RN_angle);
+surf(xg,yg,transpose(RN_angle));
 colorbar;
 caxis([0,max(max(RN_angle))]);
 
@@ -146,11 +149,11 @@ disp(S35b)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,RN_loc);
+surf(xg,yg,transpose(RN_loc));
 colorbar;
 caxis([0,1.0]); %caxis([0,max(max(RN_loc))]);
 
@@ -170,11 +173,11 @@ disp(S35c)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,cellNrefl);
+surf(xg,yg,transpose(cellNrefl));
 colorbar;
 caxis([0,max(max(cellNrefl))]);
 
@@ -194,11 +197,11 @@ disp(S35d)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,cellFrefl);
+surf(xg,yg,transpose(cellFrefl));
 colorbar;
 caxis([0,max(max(cellFrefl))]);
 
@@ -224,11 +227,11 @@ disp(S36a)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,nSppart);
+surf(xg,yg,transpose(nSppart));
 colorbar;
 caxis([0,max(max(nSppart))]);
 
@@ -248,11 +251,11 @@ disp(S36b)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,sum(SpEout,3)/size(SpEout,3));
+surf(xg,yg,transpose(sum(SpEout,3)/size(SpEout,3)));
 colorbar;
 caxis([0,max(max(max(SpEout)))]);
 
@@ -272,11 +275,11 @@ disp(S36c)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,180/pi*aveSpThout);
+surf(xg,yg,transpose(180/pi*aveSpThout));
 colorbar;
 caxis([0,180]);
 %caxis([-max(max(-180/pi*aveSpThout)),max(max(180/pi*aveSpThout))]);
@@ -299,11 +302,11 @@ disp(S36d)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,180/pi*aveSpThout_loc); 
+surf(xg,yg,transpose(180/pi*aveSpThout_loc)); 
 colorbar;
 caxis([0,90]); %180?
 %caxis([-max(max(-180/pi*aveSpThout_loc)),max(max(180/pi*aveSpThout_loc))]);
@@ -324,11 +327,11 @@ disp(S36e)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,180/pi*aveSpPhiout);
+surf(xg,yg,transpose(180/pi*aveSpPhiout));
 colorbar;
 %caxis([-180,180]);
 caxis([-max(max(-180/pi*aveSpPhiout)),max(max(180/pi*aveSpPhiout))]);
@@ -349,11 +352,11 @@ disp(S36f)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,180/pi*aveSpPhiout_loc); 
+surf(xg,yg,transpose(180/pi*aveSpPhiout_loc)); 
 colorbar;
 %caxis([-180,180]); %180?
 caxis([-max(max(-180/pi*aveSpPhiout_loc)),max(max(180/pi*aveSpPhiout_loc))]);
@@ -381,11 +384,11 @@ disp(S37a)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,nRpart);
+surf(xg,yg,transpose(nRpart));
 colorbar;
 caxis([0,max(max(nRpart))]);
 
@@ -405,11 +408,11 @@ disp(S37b)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,REout);
+surf(xg,yg,transpose(REout));
 colorbar;
 caxis([0,max(max(REout))]);
 
@@ -428,11 +431,11 @@ disp(S37c)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,180/pi*aveRThout);
+surf(xg,yg,transpose(180/pi*aveRThout));
 colorbar;
 caxis([0,180]);
 %caxis([-max(max(-180/pi*aveRThout)),max(max(180/pi*aveRThout))]);
@@ -456,11 +459,11 @@ disp(S37d)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,180/pi*aveRThout_loc); 
+surf(xg,yg,transpose(180/pi*aveRThout_loc)); 
 colorbar;
 caxis([0,90]); %180?
 %caxis([-max(max(-180/pi*aveRThout_loc)),max(max(180/pi*aveRThout_loc))]);
@@ -483,11 +486,11 @@ disp(S37e)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,180/pi*(RPhiout));
+surf(xg,yg,transpose(180/pi*(RPhiout)));
 colorbar;
 %caxis([-180,180]);
 caxis([-max(max(-180/pi*RPhiout)),max(max(180/pi*RPhiout))]);
@@ -509,11 +512,11 @@ disp(S37f)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,180/pi*RPhiout_loc); 
+surf(xg,yg,transpose(180/pi*RPhiout_loc)); 
 colorbar;
 %caxis([-180,180]); %180?
 caxis([-max(max(-180/pi*RPhiout_loc)),max(max(180/pi*RPhiout_loc))]);
@@ -540,11 +543,11 @@ disp(S38a)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,NredepSp);
+surf(xg,yg,transpose(NredepSp));
 colorbar;
 caxis([0,max(max(NredepSp))]);
 
@@ -570,11 +573,11 @@ disp(S38b)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,NredepR);
+surf(xg,yg,transpose(NredepR));
 colorbar;
 caxis([0,max(max(NredepR))]);
 
@@ -600,11 +603,11 @@ disp(S38c)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,(NredepR+NredepSp));
+surf(xg,yg,transpose(NredepR+NredepSp));
 colorbar;
 caxis([0,max(max(NredepR+NredepSp))]);
 
@@ -624,11 +627,11 @@ disp(S38d)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,(nSppart-NredepSp));
+surf(xg,yg,transpose(nSppart-NredepSp));
 colorbar;
 caxis([-max(max(-nSppart+NredepSp)),max(max(nSppart-NredepSp))]);
 

@@ -4,6 +4,8 @@ nfig=1;
 S30='plotting incoming particles output...';
 disp(S30)
 
+%due to the way 3D surface plots auto-read axes from matrices, need to
+%transpose each [x,y] matrix. Do within plot to not double variable names
 
 %1-background: contour plot
 S31='      ... 1: surface';
@@ -14,7 +16,7 @@ disp(S31a)
 figure(nfig)
 nfig=nfig+1;
 
-surf(yg,xg,zg);
+surf(xg,yg,transpose(zg));
 hold on;
 colorbar;
 
@@ -22,12 +24,13 @@ colorbar;
 title('1a: surface morphology')
 xlabel('x')
 ylabel('y')
-zlabel('surface heigh')
+zlabel('surface height')
 axis equal;
 hold off;
 
 print('1a_morphology','-dpng')
 
+%pause %troubleshooting graphs
 
 %1b-cell area
 S31b='      ...   b: normalized cell area (wrt flat surf)';
@@ -36,11 +39,11 @@ figure(nfig)
 nfig=nfig+1;
 
 
-contour(yg,xg,zg);
+contour(xg,yg,transpose(zg));
 colorbar('off');
 hold on;
 
-surf(yg,xg,normal_cell_area);
+surf(xg,yg,transpose(normal_cell_area));
 colorbar;
 caxis([1,max(max(normal_cell_area))]);
 
@@ -60,11 +63,11 @@ disp(S31c)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,sg_theta*180/pi); %in degrees
+surf(xg,yg,transpose(sg_theta*180/pi)); %in degrees
 colorbar;
 caxis([0.0,90.0]);
 %caxis([-max(max(-180/pi*sg_theta)),max(max(180/pi*sg_theta))]);
@@ -87,11 +90,11 @@ figure(nfig)
 nfig=nfig+1;
 
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,sg_phi*180/pi); %in degrees
+surf(xg,yg,transpose(sg_phi*180/pi)); %in degrees
 colorbar;
 %caxis([-90,90]);
 caxis([-180,180]);
@@ -117,11 +120,11 @@ disp(S32a)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-scatter(ya,xa,[],pangle*180/pi); 
+scatter(xa,ya,[],pangle*180/pi); 
 colorbar;
 caxis([0,90]); %180?
 %caxis([-max(max(-180/pi*pangle)),max(max(180/pi*pangle))]);
@@ -142,11 +145,11 @@ disp(S32b)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,avecellangle*180/pi);
+surf(xg,yg,transpose(avecellangle*180/pi));
 colorbar;
 caxis([0,90]);
 %caxis([-max(max(-180/pi*avecellangle)),max(max(180/pi*avecellangle))]);
@@ -219,11 +222,11 @@ disp(S33a)
 figure(nfig)
 nfig=nfig+1;
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,Ncounts);
+surf(xg,yg,transpose(Ncounts));
 colorbar;
 caxis([0,max(max(Ncounts))]);
 
@@ -236,6 +239,7 @@ hold off;
 
 print('3a_Nimpact','-dpng')
 
+%pause %troubleshooting
 
 %10-local flux normalized
 S33b='      ...   b: normalized local flux';
@@ -244,11 +248,11 @@ figure(nfig)
 nfig=nfig+1;
 
 
-contour(yg,xg,zg,1); %PLOT?
+contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(yg,xg,normal_local_flux);
+surf(xg,yg,transpose(normal_local_flux));
 colorbar;
 caxis([0,max(max(normal_local_flux))]);
 
