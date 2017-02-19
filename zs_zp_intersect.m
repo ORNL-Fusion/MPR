@@ -14,9 +14,10 @@ for p = 1:NP
     %disp(S)
 
     %%z0=1.5*max(zs)
-    [x,fxmin]=fminbnd(@(x) zs(x,x,Ax,fx,0,fy),surfxmin,surfxmax);
-    [y,fymin]=fminbnd(@(y) zs(y,y,0,fx,Ay,fy),surfymin,surfymax);
-    z0=-1.5*min(fxmin,fymin);
+    %[x,fxmin]=fminbnd(@(x) zs(x,x,Ax,fx,0,fy),surfxmin,surfxmax);
+    %[y,fymin]=fminbnd(@(y) zs(y,y,0,fx,Ay,fy),surfymin,surfymax);
+    
+    %z0=A+1; %start with specified height for now
     
     %%different options for (x0,y0)
     %%a) random initial position (x0,y0), between (initmin,initmax)
@@ -37,7 +38,7 @@ for p = 1:NP
     %%save all output (local particle's values) as:
     %first index (p) = particle index
     %%component 1:3 = impact point; 4 = angle wrt surface normal
-    partlocal(p,:) = part_surf_local_angle(p,x0,y0,z0,phi,th,Ax,fx,Ay,fy);
+    partlocal(p,:) = part_surf_local_angle(p,x0,y0,z0,phi,th,A,bx,by);
 
     %run('local_angle')
     

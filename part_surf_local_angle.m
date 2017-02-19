@@ -1,4 +1,4 @@
-function y = part_surf_local_angle(p,x0,y0,z0,phi,th,Ax,fx,Ay,fy)
+function y = part_surf_local_angle(p,x0,y0,z0,phi,th,A,bx,by)
 
 %use disp S7-S10
 
@@ -23,49 +23,22 @@ locang=0.0; %initialize
 %%and use it to pass only one variable to zs function
 
  if (th>pi/2.0 && th<pi) %particle facing downwards
-     if (Ax==0) %back to 1D sinusoidal in y
-         if (phi==0.) %intersection point = zs(y0)
-            q=zs(x0,y0,Ax,fx,Ay,fy); 
-         elseif (phi==pi/2.) %tan(phi)-> inf 
-            ys=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,Ax,fx,Ay,fy), y0); 
-            xs=x0;  
-            q=zs(xs,ys,Ax,fx,Ay,fy); 
-         else % 0<phi<pi/2
-            ys=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,Ax,fx,Ay,fy), y0); 
-            xs=x0+(ys-y0)*tan(phi);
-            q=zs(xs,ys,Ax,fx,Ay,fy);
-         end
-    
-     elseif (Ay==0)
-         if (phi==pi/2.) %intersection point = zs(x0)
-            q=zs(x0,y0,Ax,fx,Ay,fy);
-         elseif (phi==0.) %y=y0, tan(phi)=0
-            xs=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,Ax,fx,Ay,fy), x0); 
-            ys=y0;
-            q=zs(xs,ys,Ax,fx,Ay,fy);
-         else % 0<phi<pi/2
-            xs=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0+(x-x0)*tan(phi),Ax,fx,Ay,fy), x0); 
-            ys=y0+(xs-x0)*tan(phi); 
-            q=zs(xs,ys,Ax,fx,Ay,fy); 
-         end
-     
-     else %% Ax,&& Ay > 0
        if (phi==0) %%y=y0, tan(phi)=0
-          xs=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,Ax,fx,Ay,fy), x0); 
+          %fun=@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,bx,by);
+          xs=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,bx,by), x0); 
           ys=y0;
-          q=zs(xs,ys,Ax,fx,Ay,fy); 
+          q=zs(xs,ys,A,bx,by); 
        elseif (phi==pi/2.0) %%xs=x0, tan(phi)->inf.
-          ys=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,Ax,fx,Ay,fy), y0); 
+          ys=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,bx,by), y0); 
           xs=x0; 
-          q=zs(xs,ys,Ax,fx,Ay,fy);
+          q=zs(xs,ys,A,bx,by);
        else
            
-        ys=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,Ax,fx,Ay,fy), y0);         
+        ys=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0);         
         xs=x0+(ys-y0)*tan(phi); 
-        q=zs(xs,ys,Ax,fx,Ay,fy); 
+        q=zs(xs,ys,A,bx,by); 
     
        end
-     end
      
  elseif (th>=pi || th<=pi/2.0)  %this should NOT happen
         q=z0;        
@@ -80,8 +53,8 @@ ys=y0+(q-z0)*sin(phi)*tan(th);
 
 %a) if the surface is given analytically -> derivate analytically: dzs
 %ns=[-dzs/dx,-dzs/dy,1]; 
-nsx=-dzsx(xs,Ax,fx);
-nsy=-dzsy(ys,Ay,fy);
+nsx=-dzsx(xs,ys,A,bx,by);
+nsy=-dzsy(xs,ys,A,bx,by);
 nsz=1.0;
 ns=[nsx,nsy,nsz];
 %np=[d(zp)/dx,d(zp)/dy,-1] direction opposite to incoming particles'

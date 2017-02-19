@@ -1,7 +1,8 @@
-%%RESEARCH PLAN:
+%%JDC RESEARCH PLAN:
 
-%%start with a sinusoidal surface in 2D (aligned valleys or mountains);
-%%parametrized by ratio Ax:fx, Ay:fy (amplitude):(1/frequency)
+%%start with a trench surface in 2D based on sigmoid function, say
+%%hyperbolic tangent function Z = (A*tanh(x-bx))
+%%parameterized by A, bx, by.
 
 %%launch particles from a fixed z0 (~1.5-2 max z-surf)
 %%and (x0,y0) randomly chosen or forming an uniform grid
@@ -22,7 +23,7 @@ close all
 
 %%%% output folder
 currentfolder = pwd;
-outfolder=[currentfolder,'/output'];
+outfolder=[currentfolder,'/output_testtrench'];
 mkdir(outfolder);
 addpath(outfolder);
 
@@ -33,15 +34,13 @@ addpath(outfolder);
 
 
 %%1-define surface
-Ax=0.1;      %oscilation amplitude in x
-fx=1.0;      %oscilation frequency in x 
-Ay=1.0;      %oscilation amplitude in y
-fy=1.0;      %oscilation frequency in y
-
-surfxmin=-15.0*pi; %surface x-min
-surfxmax=15.0*pi;  %surface x-max
-surfymin=-15.0*pi; %surface y-min
-surfymax=15.0*pi;  %surface y-max
+A = 1;     %amplitude of trench height, in um
+bx = 5;      %1/2 average trench length in x, in um
+by = 3;      %1/2 average trench length in y, in um
+surfxmin=-10; %surface x-min
+surfxmax=10;  %surface x-max
+surfymin=-10; %surface y-min
+surfymax=10;  %surface y-max
 
 
 
@@ -49,21 +48,21 @@ surfymax=15.0*pi;  %surface y-max
 %%2-define particles
 
 %trajectories
-phi=0.0;  %phi = angle wrt x-axis 0 < phi < pi/2
+phi=90.0;  %phi = angle wrt x-axis 0 < phi < pi/2
 dlt=pi/3.0; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
 th=pi-dlt ; %theta =angle wrt +z axis ; pi/2 < theta < pi
 
 %launching area
-initxmin=-10.0*pi; %x-min of initializing ('launching') particles
-initxmax=10.0*pi;  %x-max of initializing particles
-initymin=-10.0*pi; %y-min of initializing particles
-initymax=10.0*pi;  %y-max of initializing particles
+initxmin=-6; %x-min of initializing ('launching') particles
+initxmax=6;  %x-max of initializing particles
+initymin=-4; %y-min of initializing particles
+initymax=4;  %y-max of initializing particles
+z0=1; %start with specified height for now
 
 %number of 'particles'
-NP=1200000;
-nsteps=6000; %resolution: NP/nsteps = npoints = number of surface grids
+NP=60000;
+nsteps=1000; %resolution: NP/nsteps = npoints = number of surface grids
 npoints=floor(NP/nsteps);
-
 
 
 %%3-define materials (for Eckstein's fit formula)
@@ -112,10 +111,10 @@ n2=0.9;
 %%%%%%%%%%     RUN CASE     %%%%%%%%%%
 
 %create output file and save input data
-sfile=[outfolder,'/Ax',num2str(Ax),'_Ay',num2str(Ay),'_phi',num2str(phi*180/pi),'_delta',num2str(dlt*180/pi),'.mat'];
+sfile=[outfolder,'/A',num2str(A),'_bx',num2str(bx),'_by',num2str(by),'_phi',num2str(phi*180/pi),'_delta',num2str(dlt*180/pi),'.mat'];
 filename=sfile;
 
-save(filename,'Ax','fx','Ay','fy','NP','nsteps', 'phi','th', 'surfxmin','surfxmax','surfymin','surfymax','Tg','Pr');
+save(filename,'A','bx','by','NP','nsteps', 'phi','th', 'surfxmin','surfxmax','surfymin','surfymax','Tg','Pr');
 
 run('zs_zp_intersect')
 
