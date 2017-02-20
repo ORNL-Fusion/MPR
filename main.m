@@ -80,13 +80,13 @@ run(ErosParamFile)
 %S0=['running ', ErosParamFile];
 %disp(S0)
 
-ReflParamFile=[Ecksteinfolder,'/ReflN_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV'];
-run(ReflParamFile)
+ReflNParamFile=[Ecksteinfolder,'/ReflN_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV'];
+run(ReflNParamFile)
 %S1=['running ', ReflParamFile];
 %disp(S1)
 
-ReflParamFile=[Ecksteinfolder,'/ReflE_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV'];
-run(ReflParamFile)
+ReflEParamFile=[Ecksteinfolder,'/ReflE_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV'];
+run(ReflEParamFile)
 
 %%some constants:
 %aB=5.291772e-11; %Bohr radius [m]
