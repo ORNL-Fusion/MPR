@@ -26,10 +26,11 @@ if (th>0 && th<=pi)
     %%%%%%%%%%%%%%%%%% A) travelling towards +x, +y %%%%%%%%%%%%
     
     
-    if (sin(phi) > 0.0 && cos(phi) >0.0 )
+    if (sin(phi) >= 0.0 && cos(phi) >0.0 )
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+3*pi/2.); %+2pi = as far as the solution can be from y0
-        if exist('ys','var')
+        %[ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+3*pi/2.); %+2pi = as far as the solution can be from y0
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0);
+        if ~exist('ys','var')
             disp('ys undefined in case A (+x, +y)')
         end
         xs=x0+(ys-y0)*tan(phi);
@@ -85,10 +86,11 @@ if (th>0 && th<=pi)
         
         %%%%%%%%%%%%%%%%%% B) travelling towards -x, +y %%%%%%%%%%%%
         
-    elseif (sin(phi) > 0.0 && cos(phi) <0.0 )
+    elseif (sin(phi) >= 0.0 && cos(phi) <0.0 )
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+3*pi/2.); %+2pi = as far as the solution can be from y0
-        if exist('ys','var')
+        %[ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+3*pi/2.); %+2pi = as far as the solution can be from y0
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0);
+        if ~exist('ys','var')
             disp('ys undefined in case B (-x, +y)')
         end
         xs=x0+(ys-y0)*tan(phi);
@@ -148,8 +150,9 @@ if (th>0 && th<=pi)
         
     elseif (sin(phi) < 0.0 && cos(phi) <0.0 )
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-3*pi/2.); %+2pi = as far as the solution can be from y0
-        if exist('ys','var')
+        %[ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-3*pi/2.); %+2pi = as far as the solution can be from y0
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0); 
+        if ~exist('ys','var')
             disp('ys undefined in case C (-x, -y)')
         end
         xs=x0+(ys-y0)*tan(phi);
@@ -205,8 +208,9 @@ if (th>0 && th<=pi)
         
     elseif (sin(phi) < 0.0 && cos(phi) >0.0 ) %travelling towards +x, -y
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-3*pi/2.); %+2pi = as far as the solution can be from y0
-        if exist('ys','var')
+        %[ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-3*pi/2.); %+2pi = as far as the solution can be from y0
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0);
+        if ~exist('ys','var')
             disp('ys undefined in case D (+x, -y)')
         end
         xs=x0+(ys-y0)*tan(phi);
