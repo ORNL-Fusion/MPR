@@ -1,4 +1,4 @@
-function y = emitted_part_surf_intersec(x0,y0,z0,phi,th,Ax,fx,Ay,fy,initz0)
+function y = emitted_part_surf_intersec(x0,y0,z0,phi,th,A,bx,by,initz0)
 
 
 %use disp S7-S10
@@ -28,16 +28,16 @@ if (th>0 && th<=pi)
     
     if (sin(phi) > 0.0 && cos(phi) >0.0 )
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,Ax,fx,Ay,fy), y0+3*pi/2.); %+2pi = as far as the solution can be from y0
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+3*pi/2.); %+2pi = as far as the solution can be from y0
         xs=x0+(ys-y0)*tan(phi);
-        q=zs(xs,ys,Ax,fx,Ay,fy);
+        q=zs(xs,ys,A,bx,by);
         
         tfy=strcmp(num2str(ys),num2str(y0));
         tfx=strcmp(num2str(xs),num2str(x0));
         
         ys_half=(ys+y0)/2.0;
         xs_half=(xs+x0)/2.0;
-        q_half=zs(xs_half,ys_half,Ax,fx,Ay,fy);
+        q_half=zs(xs_half,ys_half,A,bx,by);
         zp_half=z0+(ys_half-y0)/(tan(th)*sin(phi));
         
         if (exitflag==1)
@@ -84,16 +84,16 @@ if (th>0 && th<=pi)
         
     elseif (sin(phi) > 0.0 && cos(phi) <0.0 )
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,Ax,fx,Ay,fy), y0+3*pi/2.); %+2pi = as far as the solution can be from y0
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+3*pi/2.); %+2pi = as far as the solution can be from y0
         xs=x0+(ys-y0)*tan(phi);
-        q=zs(xs,ys,Ax,fx,Ay,fy);
+        q=zs(xs,ys,A,bx,by);
         
         tfy=strcmp(num2str(ys),num2str(y0));
         tfx=strcmp(num2str(xs),num2str(x0));
         
         ys_half=(ys+y0)/2.0;
         xs_half=(xs+x0)/2.0;
-        q_half=zs(xs_half,ys_half,Ax,fx,Ay,fy);
+        q_half=zs(xs_half,ys_half,A,bx,by);
         zp_half=z0+(ys_half-y0)/(tan(th)*sin(phi));
         
         if (exitflag==1)
@@ -142,16 +142,16 @@ if (th>0 && th<=pi)
         
     elseif (sin(phi) < 0.0 && cos(phi) <0.0 )
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,Ax,fx,Ay,fy), y0-3*pi/2.); %+2pi = as far as the solution can be from y0
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-3*pi/2.); %+2pi = as far as the solution can be from y0
         xs=x0+(ys-y0)*tan(phi);
-        q=zs(xs,ys,Ax,fx,Ay,fy);
+        q=zs(xs,ys,A,bx,by);
         
         tfy=strcmp(num2str(ys),num2str(y0));
         tfx=strcmp(num2str(xs),num2str(x0));
         
         ys_half=(ys+y0)/2.0;
         xs_half=(xs+x0)/2.0;
-        q_half=zs(xs_half,ys_half,Ax,fx,Ay,fy);
+        q_half=zs(xs_half,ys_half,A,bx,by);
         zp_half=z0+(ys_half-y0)/(tan(th)*sin(phi));
         
         if (exitflag==1)
@@ -196,16 +196,16 @@ if (th>0 && th<=pi)
         
     elseif (sin(phi) < 0.0 && cos(phi) >0.0 ) %travelling towards +x, -y
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,Ax,fx,Ay,fy), y0-3*pi/2.); %+2pi = as far as the solution can be from y0
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-3*pi/2.); %+2pi = as far as the solution can be from y0
         xs=x0+(ys-y0)*tan(phi);
-        q=zs(xs,ys,Ax,fx,Ay,fy);
+        q=zs(xs,ys,A,bx,by);
         
         tfy=strcmp(num2str(ys),num2str(y0));
         tfx=strcmp(num2str(xs),num2str(x0));
         
         ys_half=(ys+y0)/2.0;
         xs_half=(xs+x0)/2.0;
-        q_half=zs(xs_half,ys_half,Ax,fx,Ay,fy);
+        q_half=zs(xs_half,ys_half,A,bx,by);
         zp_half=z0+(ys_half-y0)/(tan(th)*sin(phi));
         
         if (exitflag==1)

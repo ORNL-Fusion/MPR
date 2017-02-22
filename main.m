@@ -34,9 +34,9 @@ addpath(outfolder);
 
 
 %%1-define surface
-A = 1;     %amplitude of trench height, in um
-bx = 5;      %1/2 average trench length in x, in um
-by = 3;      %1/2 average trench length in y, in um
+A = 2;     %amplitude of trench height, in um
+bx = 2;      %1/2 average trench length in x, in um
+by = 1;      %1/2 average trench length in y, in um
 surfxmin=-10; %surface x-min
 surfxmax=10;  %surface x-max
 surfymin=-10; %surface y-min
@@ -49,14 +49,14 @@ surfymax=10;  %surface y-max
 
 %trajectories
 phi=0.0;  %phi = angle wrt x-axis 0 < phi < pi/2
-dlt=pi/3.0; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
+dlt=pi/3; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
 th=pi-dlt ; %theta =angle wrt +z axis ; pi/2 < theta < pi
 
 %launching area
-initxmin=-6; %x-min of initializing ('launching') particles
-initxmax=6;  %x-max of initializing particles
-initymin=-4; %y-min of initializing particles
-initymax=4;  %y-max of initializing particles
+initxmin=-2; %x-min of initializing ('launching') particles
+initxmax=2;  %x-max of initializing particles
+initymin=-2; %y-min of initializing particles
+initymax=2;  %y-max of initializing particles
 z0=1; %start with specified height for now
 
 %number of 'particles'
@@ -79,13 +79,13 @@ run(ErosParamFile)
 %S0=['running ', ErosParamFile];
 %disp(S0)
 
-ReflNParamFile=[Ecksteinfolder,'/ReflN_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV'];
-run(ReflNParamFile)
+ReflParamFile=[Ecksteinfolder,'/ReflN_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV'];
+run(ReflParamFile)
 %S1=['running ', ReflParamFile];
 %disp(S1)
 
-ReflEParamFile=[Ecksteinfolder,'/ReflE_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV'];
-run(ReflEParamFile)
+ReflParamFile=[Ecksteinfolder,'/ReflE_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV'];
+run(ReflParamFile)
 
 %%some constants:
 %aB=5.291772e-11; %Bohr radius [m]
