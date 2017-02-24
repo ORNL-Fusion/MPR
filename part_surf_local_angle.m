@@ -19,7 +19,7 @@ locang=0.0; %initialize
 
 %%a) if the surface is given analytically:
 %%as the solution will be along the particle's trajectory, we can write
-%%x as a function of y: x=x0+(ys-y0)*tan(phi) 
+%%x as a function of y: x=x0+(ys-y0)/tan(phi) 
 %%and use it to pass only one variable to zs function
 
  if (th>pi/2.0 && th<pi) %particle facing downwards
@@ -35,7 +35,7 @@ locang=0.0; %initialize
        else
            
         ys=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0);         
-        xs=x0+(ys-y0)*tan(phi); 
+        xs=x0+(ys-y0)/tan(phi); 
         q=zs(xs,ys,A,bx,by); 
     
        end

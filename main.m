@@ -60,9 +60,11 @@ initymax=2;  %y-max of initializing particles
 z0=1; %start with specified height for now
 
 %number of 'particles'
-NP=60000;
-nsteps=1000; %resolution: NP/nsteps = npoints = number of surface grids
-npoints=floor(NP/nsteps);
+NP=160000; 
+%nsteps = average #impacts per cell, in a flat surface: i.e., represents statistics
+nsteps=800; 
+%resolution = number of surface grids;
+npoints=floor(NP/nsteps); 
 
 
 %%3-define materials (for Eckstein's fit formula)
