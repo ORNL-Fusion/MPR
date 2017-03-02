@@ -81,10 +81,10 @@ hold off;
 print('4c_Nerosion','-dpng')
 
 
-S34c_abs=['      ... gross erosion (sput yield * N impacts) = ', num2str(sum(sum(cellNeros)))];
+S34c_abs=['      ... gross erosion (sum sput yield * N impacts) = ', num2str(sum(sum(cellNeros)))];
 disp(S34c_abs)
 
-S34c_frac=['      ... gross erosion yiled (wrt #impacts) = ', num2str(sum(sum(cellNeros))/NP)];
+S34c_frac=['      ... average (gross) erosion yiled (wrt #impacts) = ', num2str(sum(sum(cellNeros))/NP)];
 disp(S34c_frac)
 
 %4d-total erosion of each cell
@@ -189,6 +189,14 @@ zlabel('total reflection (N particles)')
 hold off;
 
 print('5c_Nreflection','-dpng')
+
+
+S35c_abs=['      ... reflection (sum refl yield * N impacts) = ', num2str(sum(sum(cellNrefl)))];
+disp(S35c_abs)
+ 
+S35c_frac=['      ... average reflection yiled (wrt #impacts) = ', num2str(sum(sum(cellNrefl))/NP)];
+disp(S35c_frac)
+
 
 
 %5d-total reflection from each cell (flux)

@@ -18,7 +18,7 @@ end
 if (nsx==0.0 && nsy==0.0) %surfacenth = 0.0, phi not defined -> say 0.0
         surfacenphi=0.0;
     
-elseif (nsy==0.0)
+elseif (nsx==0.0)
     
     if  (nsy>0) %cos(y/fy)<0 <-> pi/2<y/fy<3pi/2; point at +y
         surfacenphi=pi/2.0;

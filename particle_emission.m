@@ -131,7 +131,7 @@ for i=1:npoints
                 aveSpPhiout_tmp=aveSpPhiout_tmp+SpPhiout(i,j,p);
                 
                 %intersection of sputtered particle with surface
-                sput_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),SpPhiout(i,j),SpThout(i,j,p),Ax,fx,Ay,fy,z0);
+                sput_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),SpPhiout(i,j),SpThout(i,j,p),Ax,fx,Ay,fy,z0,dx, dy);
                 sput_redepos(i,j,p,1:4)=sput_redepos_p(1:4);   %to store the data
                 xr=sput_redepos_p(1);   %for sorting redep positions
                 yr=sput_redepos_p(2);
@@ -261,7 +261,29 @@ for i=1:npoints
             REout(i,j)=E0*RE_loc(i,j)/RN_loc(i,j);
             Eout=REout(i,j); %needed?
             
-            %specular direction
+             %specular direction
+
+             %new model:
+             % particles moves forward (in x): -pi/2 <= Phi_in <= pi/2
+             %if surface_phi also forward -> particle keeps moving in same direction
+             %else, apply pure specular reflection:
+ 
+             if (phi>=0 && sg_phi(i,j)>=0 && cos(sg_phi(i,j))>=0) 
+                 RPhiout(i,j)=phi;
+                 
+             elseif(phi<0 && sg_phi(i,j)<0 && cos(sg_phi(i,j))>0) 
+                 RPhiout(i,j)=phi;
+                 
+             else
+                 phi_tmp=phi+pi*sign(sg_phi(i,j));
+                 RPhiout(i,j)=2*sg_phi(i,j)-phi_tmp;
+             end
+             
+             RPhiout_loc(i,j)=RPhiout(i,j)-sg_phi(i,j);
+             
+             %{ 
+            old model:
+
             if (sign(phi)==sign(sg_phi(i,j)))
                 RPhiout_loc(i,j)=sg_phi(i,j)-phi;
             else
@@ -275,6 +297,7 @@ for i=1:npoints
             elseif (RPhiout(i,j)<-pi)
                 RPhiout(i,j)=RPhiout(i,j)+2*pi;
             end
+            %}
             
             
             %For each reflected particle
@@ -287,7 +310,7 @@ for i=1:npoints
                 aveRThout_tmp=aveRThout_tmp+RThout(i,j,p);
                 
                 %intersection of reflected particle with surface
-                refl_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),RPhiout(i,j),RThout(i,j,p),Ax,fx,Ay,fy,z0);
+                refl_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),RPhiout(i,j),RThout(i,j,p),Ax,fx,Ay,fy,z0,dx,dy);
                 refl_redepos(i,j,p,1:4)=refl_redepos_p(1:4); %to store values
                 xr=refl_redepos_p(1); %for sorting redep positions
                 yr=refl_redepos_p(2);
