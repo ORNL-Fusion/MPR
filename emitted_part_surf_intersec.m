@@ -23,7 +23,9 @@ function y = emitted_part_surf_intersec(x0,y0,z0,phi,th,A,bx,by,initz0, dx, dy)
 %redep=5 -> some other case in fzero
 
 erreps=dx*sqrt(3)/2.; %error allowed when comparing the solution to initial position; ~cell size
-initguess=8; %initial guess for fzero = x0+ initiguess*dx (or y0 + ...*dy)
+%initguess=8; %initial guess for fzero = x0+ initiguess*dx (or y0 + ...*dy)
+%initial guess for fzero = x0+ sqrt((1.5*bx)^2+(1.5*by)^2)
+%if along x or y, initial guess for fzero = x0 + 1.5*bx
 
 if (tan(th)==0) %th=0 or pi
     %trajectory along z-axis -> NOT REDEPOSITED FOR A WELL DEFINED FUNCTION
@@ -42,15 +44,15 @@ elseif (th>0 && th<pi) %tan(th)!=0
         casename='A';   
         
         if (sin(phi)==0) %tan(phi)=0 -> ys=y0
-            [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,bx,by), x0+initguess*dx);%+initguess*dx (or dy) is an arbitrary distance
+            [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,bx,by), x0+1*bx);%+initguess*dx (or dy) is an arbitrary distance
             ys=y0;
             
         elseif (cos(phi)==0)
-            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,bx,by), y0+initguess*dy); %as guess from initial point
+            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,bx,by), y0+1*by); %as guess from initial point
             xs=x0;
             
         else
-            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+initguess*dy); 
+            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+1*dy); 
             xs=x0+(ys-y0)/tan(phi);            
         end
         
@@ -99,7 +101,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             else
                 redep=0;
                 
-                if (dist>10*initguess)
+                if (dist>10*dx) %???
                     Sredepos=['RE-DEPOSITED! in case ', casename, ' but at distance from initial position: ', num2str(dist)];
                     disp(Sredepos)
                     Sdist=['        For phi=', num2str(phi), ' th=', num2str(th), ' x0=', num2str(x0),' xs=', num2str(xs), ' y0=', num2str(y0),  ' ys=', num2str(ys) ]; %test redep
@@ -129,13 +131,13 @@ elseif (th>0 && th<pi) %tan(th)!=0
         casename='B';
         
         if (sin(phi)==0)
-            [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,bx,by), x0+initguess*dx);
+            [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,bx,by), x0-1*bx);
             ys=y0;
         elseif (cos(phi)==0)
-            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,bx,by), y0+initguess*dy);
+            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,bx,by), y0+1*by);
             xs=x0;
         else
-            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+initguess*dy);
+            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+1*by);
             xs=x0+(ys-y0)/tan(phi);
         end
         
@@ -184,7 +186,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 
             else
                 redep=0;
-                if (dist>10*initguess)
+                if (dist>10*dx)
                     Sredepos=['RE-DEPOSITED! in case ', casename, ' but at distance from initial position: ', num2str(dist)];
                     disp(Sredepos)
                     Sdist=['        For phi=', num2str(phi), ' th=', num2str(th), ' x0=', num2str(x0),' xs=', num2str(xs), ' y0=', num2str(y0),  ' ys=', num2str(ys) ]; %test redep
@@ -214,7 +216,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
     elseif (sin(phi) < 0.0 && cos(phi) <0.0 ) %sin(phi)==0, cos(phi)==0 already included in B
         casename='C';
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-initguess*dy);
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-1*by);
         xs=x0+(ys-y0)/tan(phi);
         
         if ~exist('ys','var')
@@ -263,7 +265,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 
             else
                 redep=0;
-                if (dist>10*initguess)
+                if (dist>10*dx)
                     Sredepos=['RE-DEPOSITED! in case ', casename, ' but at distance from initial position: ', num2str(dist)];
                     disp(Sredepos)
                     Sdist=['        For phi=', num2str(phi), ' th=', num2str(th), ' x0=', num2str(x0),' xs=', num2str(xs), ' y0=', num2str(y0),  ' ys=', num2str(ys) ]; %test redep
@@ -291,7 +293,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
     elseif (sin(phi) < 0.0 && cos(phi) >0.0 ) %%sin(phi)==0, , cos(phi)==0 already included in A
         casename='D';
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-initguess*dy);
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-1*by);
         xs=x0+(ys-y0)/tan(phi);
         
         if ~exist('ys','var')
@@ -339,7 +341,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 
             else
                 redep=0;
-                if (dist>10*initguess)
+                if (dist>10*dx)
                     Sredepos=['RE-DEPOSITED! in case ', casename, ' but at distance from initial position: ', num2str(dist)];
                     disp(Sredepos)
                     Sdist=['        For phi=', num2str(phi), ' th=', num2str(th), ' x0=', num2str(x0),' xs=', num2str(xs), ' y0=', num2str(y0),  ' ys=', num2str(ys) ]; %test redep

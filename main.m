@@ -34,13 +34,13 @@ addpath(outfolder);
 
 
 %%1-define surface
-A = 2;     %amplitude of trench height, in um
-bx = 2;      %1/2 average trench length in x, in um
-by = 1;      %1/2 average trench length in y, in um
-surfxmin=-10; %surface x-min
-surfxmax=10;  %surface x-max
-surfymin=-10; %surface y-min
-surfymax=10;  %surface y-max
+A = 5;     %amplitude of trench height, in um
+bx = 5;      %1/2 average trench length in x, in um
+by = 2;      %1/2 average trench length in y, in um
+surfxmin=-15; %surface x-min
+surfxmax=15;  %surface x-max
+surfymin=-15; %surface y-min
+surfymax=15;  %surface y-max
 
 
 
@@ -48,21 +48,22 @@ surfymax=10;  %surface y-max
 %%2-define particles
 
 %trajectories
-phi=0.0;  %phi = angle wrt x-axis 0 < phi < pi/2
+phi=0;  %phi = angle wrt x-axis 0 < phi < pi/2
 dlt=pi/3; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
 th=pi-dlt ; %theta =angle wrt +z axis ; pi/2 < theta < pi
+distr='blankk'; %Curr85, Boro85, Boro88, Boro89, or blankk
 
 %launching area
-initxmin=-2; %x-min of initializing ('launching') particles
-initxmax=2;  %x-max of initializing particles
-initymin=-2; %y-min of initializing particles
-initymax=2;  %y-max of initializing particles
+initxmin=-12; %x-min of initializing ('launching') particles
+initxmax=12;  %x-max of initializing particles
+initymin=-10; %y-min of initializing particles
+initymax=10;  %y-max of initializing particles
 z0=1; %start with specified height for now
 
 %number of 'particles'
-NP=160000; 
+NP=120000; 
 %nsteps = average #impacts per cell, in a flat surface: i.e., represents statistics
-nsteps=800; 
+nsteps=1200; 
 %resolution = number of surface grids;
 npoints=floor(NP/nsteps); 
 
