@@ -37,7 +37,7 @@ for p = 1:NP
     if (distr=='Curr85')
         %Curreli data set is in degrees, from theta 0 - 90
         %theta in Curreli data corresponds to delta in this code
-        ga1=0.02985;
+        ga1=0.02985; %Double gaussian fit values for data
         gb1=75.01;
         gc1=6.697;
         ga2=0.03242;
@@ -49,7 +49,7 @@ for p = 1:NP
             dlttemp = 45*rand+45; %uniformly dist. random number for theta values between 45 and 90 degrees. 
                                         %Cutoff value is pi/4 or 45
                                         %degrees, to simplify search method
-            ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.06, the upper limit for distribution
+            ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.08, the upper limit for distribution
             Curreli85dis = ga1*exp(-((dlttemp-gb1)/gc1)^2)+ga2*exp(-((dlttemp-gb2)/gc2)^2);
             if (ftemp<=Curreli85dis)
                 partglobal(p,5)=pi-(dlttemp*pi/180); %convert from degrees to radian, and set new value for theta for this code
@@ -60,7 +60,7 @@ for p = 1:NP
     elseif (distr=='Boro85')
         %Borodkina data set is in degrees, from theta 0 - 90
         %theta in Borodkina data corresponds to delta in this code
-        ga1=0.02713;
+        ga1=0.02713; %Double gaussian fit values for data
         gb1=60.47;
         gc1=9.064;
         ga2=0.03234;
@@ -72,7 +72,7 @@ for p = 1:NP
             dlttemp = 45*rand+45; %uniformly dist. random number for theta values between 45 and 90 degrees. 
                                         %Cutoff value is pi/4 or 45
                                         %degrees, to simplify search method
-            ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.06, the upper limit for distribution
+            ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.08, the upper limit for distribution
             Borod85dis = ga1*exp(-((dlttemp-gb1)/gc1)^2)+ga2*exp(-((dlttemp-gb2)/gc2)^2);
             if (ftemp<=Borod85dis)
                 partglobal(p,5)=pi-(dlttemp*pi/180); %convert from degrees to radian, and set new value for theta for this code
@@ -83,7 +83,7 @@ for p = 1:NP
     elseif (distr=='Boro88')
         %Borodkina data set is in degrees, from theta 0 - 90
         %theta in Borodkina data corresponds to delta in this code
-        ga1=-0.05643;
+        ga1=-0.05643; %Double gaussian fit values for data
         gb1=69.05;
         gc1=8.433;
         ga2=0.1111;
@@ -95,7 +95,7 @@ for p = 1:NP
             dlttemp = 45*rand+45; %uniformly dist. random number for theta values between 45 and 90 degrees. 
                                         %Cutoff value is pi/4 or 45
                                         %degrees, to simplify search method
-            ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.06, the upper limit for distribution
+            ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.08, the upper limit for distribution
             Borod88dis = ga1*exp(-((dlttemp-gb1)/gc1)^2)+ga2*exp(-((dlttemp-gb2)/gc2)^2);
             if (ftemp<=Borod88dis)
                 partglobal(p,5)=pi-(dlttemp*pi/180); %convert from degrees to radian, and set new value for theta for this code
@@ -106,7 +106,7 @@ for p = 1:NP
     elseif (distr=='Boro89')
         %Borodkina data set is in degrees, from theta 0 - 90
         %theta in Borodkina data corresponds to delta in this code
-        ga1=0.0145;
+        ga1=0.0145; %Double gaussian fit values for data
         gb1=75.64;
         gc1=5.011;
         ga2=0.05906;
@@ -118,7 +118,7 @@ for p = 1:NP
             dlttemp = 45*rand+45; %uniformly dist. random number for theta values between 45 and 90 degrees. 
                                         %Cutoff value is pi/4 or 45
                                         %degrees, to simplify search method
-            ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.06, the upper limit for distribution
+            ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.08, the upper limit for distribution
             Borod89dis = ga1*exp(-((dlttemp-gb1)/gc1)^2)+ga2*exp(-((dlttemp-gb2)/gc2)^2);
             if (ftemp<=Borod89dis)
                 partglobal(p,5)=pi-(dlttemp*pi/180); %convert from degrees to radian, and set new value for theta for this code
@@ -135,7 +135,7 @@ for p = 1:NP
     %%save all output (local particle's values) as:
     %first index (p) = particle index
     %%component 1:3 = impact point; 4 = angle wrt surface normal
-    partlocal(p,:) = part_surf_local_angle(p,x0,y0,z0,phi,partglobal(p,5),A,bx,by);
+    partlocal(p,:) = part_surf_local_angle(p,x0,y0,z0,phi,partglobal(p,5),A,S,bx,by);
 
     %run('local_angle')
     

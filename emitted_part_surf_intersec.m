@@ -1,4 +1,4 @@
-function y = emitted_part_surf_intersec(x0,y0,z0,phi,th,A,bx,by,initz0, dx, dy)
+function y = emitted_part_surf_intersec(x0,y0,z0,phi,th,A,S,bx,by,initz0, dx, dy)
 
 
 %use disp S7-S10
@@ -44,15 +44,18 @@ elseif (th>0 && th<pi) %tan(th)!=0
         casename='A';   
         
         if (sin(phi)==0) %tan(phi)=0 -> ys=y0
-            [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,bx,by), x0+1*bx);%+initguess*dx (or dy) is an arbitrary distance
+            %initguess=[x0,1.5*bx];
+            [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,S,bx,by), x0+1.5*bx);%+initguess*dx (or dy) is an arbitrary distance
             ys=y0;
             
         elseif (cos(phi)==0)
-            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,bx,by), y0+1*by); %as guess from initial point
+            %initguess=[y0,1.5*by];
+            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,S,bx,by), y0+1.5*by); %as guess from initial point
             xs=x0;
             
         else
-            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+1*dy); 
+            %initguess=[y0,1.5*by];
+            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,S,bx,by), y0+1.5*by); 
             xs=x0+(ys-y0)/tan(phi);            
         end
         
@@ -61,7 +64,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             disp(Sysexist)
         end
         
-        q=zs(xs,ys,A,bx,by);
+        q=zs(xs,ys,A,S,bx,by);
         
         dist=sqrt((xs-x0)^2+(ys-y0)^2+(q-z0)^2);
         
@@ -131,13 +134,16 @@ elseif (th>0 && th<pi) %tan(th)!=0
         casename='B';
         
         if (sin(phi)==0)
-            [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,bx,by), x0-1*bx);
+            %initguess=[x0,-1.5*bx];
+            [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,S,bx,by), x0-1.5*bx);
             ys=y0;
         elseif (cos(phi)==0)
-            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,bx,by), y0+1*by);
+            %initguess=[y0,1.5*by];
+            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,S,bx,by), y0+1.5*by);
             xs=x0;
         else
-            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0+1*by);
+            %initguess=[y0,1.5*by];
+            [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,S,bx,by), y0+1.5*by);
             xs=x0+(ys-y0)/tan(phi);
         end
         
@@ -146,7 +152,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             disp(Sysexist)
         end
         
-        q=zs(xs,ys,A,bx,by);
+        q=zs(xs,ys,A,S,bx,by);
         
         dist=sqrt((xs-x0)^2+(ys-y0)^2+(q-z0)^2);
         
@@ -216,7 +222,8 @@ elseif (th>0 && th<pi) %tan(th)!=0
     elseif (sin(phi) < 0.0 && cos(phi) <0.0 ) %sin(phi)==0, cos(phi)==0 already included in B
         casename='C';
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-1*by);
+        %initguess=[y0,-1.5*by];
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,S,bx,by),y0-1.5*by);
         xs=x0+(ys-y0)/tan(phi);
         
         if ~exist('ys','var')
@@ -224,7 +231,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             disp(Sysexist)
         end
         
-        q=zs(xs,ys,A,bx,by);
+        q=zs(xs,ys,A,S,bx,by);
         
         dist=sqrt((xs-x0)^2+(ys-y0)^2+(q-z0)^2);
         
@@ -293,7 +300,8 @@ elseif (th>0 && th<pi) %tan(th)!=0
     elseif (sin(phi) < 0.0 && cos(phi) >0.0 ) %%sin(phi)==0, , cos(phi)==0 already included in A
         casename='D';
         
-        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,bx,by), y0-1*by);
+        %initguess=[y0,-1.5*by];
+        [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,S,bx,by), y0-1.5*by);
         xs=x0+(ys-y0)/tan(phi);
         
         if ~exist('ys','var')
@@ -301,7 +309,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             disp(Sysexist)
         end
         
-        q=zs(xs,ys,A,bx,by);
+        q=zs(xs,ys,A,S,bx,by);
         
         dist=sqrt((xs-x0)^2+(ys-y0)^2+(q-z0)^2);
         

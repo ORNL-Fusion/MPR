@@ -35,12 +35,13 @@ addpath(outfolder);
 
 %%1-define surface
 A = 5;     %amplitude of trench height, in um
+S = 3;     %slope parameter, should range from 1 to ~4 or 5
 bx = 5;      %1/2 average trench length in x, in um
 by = 2;      %1/2 average trench length in y, in um
-surfxmin=-15; %surface x-min
-surfxmax=15;  %surface x-max
-surfymin=-15; %surface y-min
-surfymax=15;  %surface y-max
+surfxmin=-10; %surface x-min
+surfxmax=10;  %surface x-max
+surfymin=-8; %surface y-min
+surfymax=8;  %surface y-max
 
 
 
@@ -49,16 +50,16 @@ surfymax=15;  %surface y-max
 
 %trajectories
 phi=0;  %phi = angle wrt x-axis 0 < phi < pi/2
-dlt=pi/3; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
+dlt=1.48353; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
 th=pi-dlt ; %theta =angle wrt +z axis ; pi/2 < theta < pi
-distr='blankk'; %Curr85, Boro85, Boro88, Boro89, or blankk
+distr='blankk'; %Curr85, Boro85, Boro88, Boro89, or blankk. Replaces dlt & th if not blankk
 
 %launching area
-initxmin=-12; %x-min of initializing ('launching') particles
-initxmax=12;  %x-max of initializing particles
-initymin=-10; %y-min of initializing particles
-initymax=10;  %y-max of initializing particles
-z0=1; %start with specified height for now
+initxmin=-10; %x-min of initializing ('launching') particles
+initxmax=4;  %x-max of initializing particles
+initymin=-3; %y-min of initializing particles
+initymax=3;  %y-max of initializing particles
+z0=0.5; %start with specified height for now
 
 %number of 'particles'
 NP=120000; 
@@ -69,8 +70,8 @@ npoints=floor(NP/nsteps);
 
 
 %%3-define materials (for Eckstein's fit formula)
-Tg='W'; %target material
-Pr='N'; %projectile 
+Tg='Si'; %target material
+Pr='D'; %projectile 
 E0=100.0; %impact energy
 
 %%load erosion and reflection parameters

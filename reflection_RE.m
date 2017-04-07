@@ -18,7 +18,7 @@ RE_loc(1:npoints,1:npoints)=0.0;
 tf=strcmp(Pr,Tg); %compage target and projectile components
 
 if (tf~=1) %NOT self-bombardment
-    RE_0=b1*(eps_L)^a2/(1+a3*(eps_L)^b4);
+    RE_0=a1*(eps_L)^a2/(1+a3*(eps_L)^a4);
 else
     RE_0=exp(a1*(eps_L)^a2)/(1+exp(a3*(eps_L)^a4));
 end
