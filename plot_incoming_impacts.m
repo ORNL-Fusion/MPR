@@ -5,7 +5,8 @@ S30='plotting incoming particles output...';
 disp(S30)
 
 %due to the way 3D surface plots auto-read axes from matrices, need to
-%transpose each [x,y] matrix. Do within plot to not double variable names
+%transpose each [x,y] matrix so that horizontal axis = x and vertical = y.
+%Do within plot to not double variable names.
 
 %1-background: contour plot
 S31='      ... 1: surface';
@@ -18,6 +19,7 @@ nfig=nfig+1;
 
 surf(xg,yg,transpose(zg));
 hold on;
+%set(p1,'EdgeColor','none');
 colorbar;
 
 
@@ -29,8 +31,6 @@ axis equal;
 hold off;
 
 print('1a_morphology','-dpng')
-
-%pause %troubleshooting graphs
 
 %1b-cell area
 S31b='      ...   b: normalized cell area (wrt flat surf)';
@@ -226,8 +226,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(Ncounts));
-colorbar;
+p3a=surf(xg,yg,transpose(Ncounts));
+set(p3a,'EdgeColor','none');colorbar;
 caxis([0,max(max(Ncounts))]);
 
 axis equal;
@@ -252,8 +252,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(normal_local_flux));
-colorbar;
+p3b=surf(xg,yg,transpose(normal_local_flux));
+set(p3b,'EdgeColor','none');colorbar;
 caxis([0,max(max(normal_local_flux))]);
 
 axis equal;

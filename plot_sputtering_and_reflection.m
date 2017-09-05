@@ -43,8 +43,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(Y_loc));
-colorbar;
+p4b=surf(xg,yg,transpose(Y_loc));
+set(p4b,'EdgeColor','none'); colorbar;
 caxis([0,max(max(Y_loc))]);
 
 axis equal;
@@ -67,8 +67,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(cellNeros));
-colorbar;
+p4c=surf(xg,yg,transpose(cellNeros));
+set(p4c,'EdgeColor','none');colorbar;
 caxis([0,max(max(cellNeros))]);
 
 axis equal;
@@ -84,7 +84,7 @@ print('4c_Nerosion','-dpng')
 S34c_abs=['      ... gross erosion (sput yield * N impacts) = ', num2str(sum(sum(cellNeros)))];
 disp(S34c_abs)
 
-S34c_frac=['      ... average erosion yiled (wrt #impacts) = ', num2str(sum(sum(cellNeros))/NP)];
+S34c_frac=['      ... average erosion yield (wrt #impacts) = ', num2str(sum(sum(cellNeros))/NP)];
 disp(S34c_frac)
 
 %4d-total erosion of each cell
@@ -177,8 +177,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(cellNrefl));
-colorbar;
+p5c=surf(xg,yg,transpose(cellNrefl));
+set(p5c,'EdgeColor','none');colorbar; colormap jet;
 caxis([0,max(max(cellNrefl))]);
 
 axis equal;
@@ -206,8 +206,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(cellFrefl));
-colorbar;
+p5d=surf(xg,yg,transpose(cellFrefl));
+set(p5d,'EdgeColor','none');colorbar; colormap jet;
 caxis([0,max(max(cellFrefl))]);
 
 axis equal;
@@ -236,8 +236,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(nSppart));
-colorbar;
+p6a=surf(xg,yg,transpose(nSppart));
+set(p6a,'EdgeColor','none');colorbar; colormap jet;
 caxis([0,max(max(nSppart))]);
 
 axis equal;
@@ -393,8 +393,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(nRpart));
-colorbar;
+p7a=surf(xg,yg,transpose(nRpart));
+set(p7a,'EdgeColor','none');colorbar; colormap jet;
 caxis([0,max(max(nRpart))]);
 
 axis equal;
@@ -552,9 +552,10 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(NredepSp));
-colorbar;
+p8a=surf(xg,yg,transpose(NredepSp));
+set(p8a,'EdgeColor','none');colorbar; colormap jet;
 caxis([0,max(max(NredepSp))]);
+%caxis([0,10]); %temporarily add specified z axis length, for direct comparison purposes
 
 axis equal;
 title('8a: number of redeposited particles (from sput)')
@@ -582,8 +583,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(NredepR));
-colorbar;
+p8b=surf(xg,yg,transpose(NredepR));
+set(p8b,'EdgeColor','none');colorbar; colormap jet;
 caxis([0,max(max(NredepR))]);
 
 axis equal;
@@ -612,8 +613,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(NredepR+NredepSp));
-colorbar;
+p8c=surf(xg,yg,transpose(NredepR+NredepSp));
+set(p8c,'EdgeColor','none');colorbar; colormap jet;
 caxis([0,max(max(NredepR+NredepSp))]);
 
 axis equal;
@@ -636,8 +637,8 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(nSppart-NredepSp));
-colorbar;
+p8d=surf(xg,yg,transpose(nSppart-NredepSp));
+set(p8d,'EdgeColor','none');colorbar; colormap jet;
 caxis([-max(max(-nSppart+NredepSp)),max(max(nSppart-NredepSp))]);
 
 axis equal;

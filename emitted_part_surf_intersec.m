@@ -106,9 +106,9 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 
                 if (dist>10*dx) %???
                     Sredepos=['RE-DEPOSITED! in case ', casename, ' but at distance from initial position: ', num2str(dist)];
-                    disp(Sredepos)
+                    %disp(Sredepos) remove output for now
                     Sdist=['        For phi=', num2str(phi), ' th=', num2str(th), ' x0=', num2str(x0),' xs=', num2str(xs), ' y0=', num2str(y0),  ' ys=', num2str(ys) ]; %test redep
-                    disp(Sdist)
+                    %disp(Sdist) remove output for now
                 end
             end
             
@@ -194,9 +194,9 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 redep=0;
                 if (dist>10*dx)
                     Sredepos=['RE-DEPOSITED! in case ', casename, ' but at distance from initial position: ', num2str(dist)];
-                    disp(Sredepos)
+                    %disp(Sredepos) remove output for now
                     Sdist=['        For phi=', num2str(phi), ' th=', num2str(th), ' x0=', num2str(x0),' xs=', num2str(xs), ' y0=', num2str(y0),  ' ys=', num2str(ys) ]; %test redep
-                    disp(Sdist)
+                    %disp(Sdist)  remove output for now
                 end
             end
             
@@ -274,9 +274,9 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 redep=0;
                 if (dist>10*dx)
                     Sredepos=['RE-DEPOSITED! in case ', casename, ' but at distance from initial position: ', num2str(dist)];
-                    disp(Sredepos)
+                    %disp(Sredepos) remove output for now
                     Sdist=['        For phi=', num2str(phi), ' th=', num2str(th), ' x0=', num2str(x0),' xs=', num2str(xs), ' y0=', num2str(y0),  ' ys=', num2str(ys) ]; %test redep
-                    disp(Sdist)
+                    %disp(Sdist) remove output for now
                 end
             end
             
@@ -351,9 +351,9 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 redep=0;
                 if (dist>10*dx)
                     Sredepos=['RE-DEPOSITED! in case ', casename, ' but at distance from initial position: ', num2str(dist)];
-                    disp(Sredepos)
+                    %disp(Sredepos) remove output for now
                     Sdist=['        For phi=', num2str(phi), ' th=', num2str(th), ' x0=', num2str(x0),' xs=', num2str(xs), ' y0=', num2str(y0),  ' ys=', num2str(ys) ]; %test redep
-                    disp(Sdist)
+                    %disp(Sdist) remove output for now
                 end
             end
             

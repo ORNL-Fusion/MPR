@@ -12,12 +12,6 @@ for p = 1:NP
         
     %S=['part  ',num2str(p)];
     %disp(S)
-
-    %%z0=1.5*max(zs)
-    %[x,fxmin]=fminbnd(@(x) zs(x,x,Ax,fx,0,fy),surfxmin,surfxmax);
-    %[y,fymin]=fminbnd(@(y) zs(y,y,0,fx,Ay,fy),surfymin,surfymax);
-    
-    %z0=A+1; %start with specified height for now
     
     %%different options for (x0,y0)
     %%a) random initial position (x0,y0), between (initmin,initmax)
@@ -31,7 +25,7 @@ for p = 1:NP
     partglobal(p,1)=x0;
     partglobal(p,2)=y0;
     partglobal(p,3)=z0;
-    partglobal(p,4)=dlt*180/pi;
+    
     
     %initiate angular distribution of th for each particle, based on a given analytical distribution
     if (distr=='Curr85')
@@ -52,6 +46,7 @@ for p = 1:NP
             ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.08, the upper limit for distribution
             Curreli85dis = ga1*exp(-((dlttemp-gb1)/gc1)^2)+ga2*exp(-((dlttemp-gb2)/gc2)^2);
             if (ftemp<=Curreli85dis)
+                partglobal(p,4)=dlttemp*pi/180;      %convert from degrees to radian, and set new value for delta for this code
                 partglobal(p,5)=pi-(dlttemp*pi/180); %convert from degrees to radian, and set new value for theta for this code
                 r=1; %end the Von Neumann rejection process
             else 
@@ -75,6 +70,7 @@ for p = 1:NP
             ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.08, the upper limit for distribution
             Borod85dis = ga1*exp(-((dlttemp-gb1)/gc1)^2)+ga2*exp(-((dlttemp-gb2)/gc2)^2);
             if (ftemp<=Borod85dis)
+                partglobal(p,4)=dlttemp*pi/180;      %convert from degrees to radian, and set new value for delta for this code
                 partglobal(p,5)=pi-(dlttemp*pi/180); %convert from degrees to radian, and set new value for theta for this code
                 r=1; %end the Von Neumann rejection process
             else 
@@ -98,6 +94,7 @@ for p = 1:NP
             ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.08, the upper limit for distribution
             Borod88dis = ga1*exp(-((dlttemp-gb1)/gc1)^2)+ga2*exp(-((dlttemp-gb2)/gc2)^2);
             if (ftemp<=Borod88dis)
+                partglobal(p,4)=dlttemp*pi/180;      %convert from degrees to radian, and set new value for delta for this code
                 partglobal(p,5)=pi-(dlttemp*pi/180); %convert from degrees to radian, and set new value for theta for this code
                 r=1; %end the Von Neumann rejection process
             else 
@@ -121,16 +118,18 @@ for p = 1:NP
             ftemp = rand*0.08; %uniformly dist. random number between 0 and 0.08, the upper limit for distribution
             Borod89dis = ga1*exp(-((dlttemp-gb1)/gc1)^2)+ga2*exp(-((dlttemp-gb2)/gc2)^2);
             if (ftemp<=Borod89dis)
+                partglobal(p,4)=dlttemp*pi/180;      %convert from degrees to radian, and set new value for delta for this code
                 partglobal(p,5)=pi-(dlttemp*pi/180); %convert from degrees to radian, and set new value for theta for this code
                 r=1; %end the Von Neumann rejection process
             else 
             end
         end    
     else
+        partglobal(p,4)=dlt;
         partglobal(p,5)=th;
     end
             
-            %%given an analytical surface and particle trajectory, find the intersection
+    %%given an analytical surface and particle trajectory, find the intersection
     %%point and angle wrt the surface normal
     %%save all output (local particle's values) as:
     %first index (p) = particle index
