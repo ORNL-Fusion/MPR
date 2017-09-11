@@ -14,7 +14,7 @@ disp('---- calling particle emission -----')
 
 disp('re-deposition:   0:  YES, particle re-deposited in final position')
 disp('                1-6: NO; Final position = projection of trajectory in initial z0: ')
-disp('                1:  (x0,y0)=(xs,yx)     2: err in z-direction  3: err in x-direction  4: err in y-direction;')
+disp('                1:  (x0,y0)=(xs,yx)     2: err in z-direction  3: err in x- or y-direction;')
 disp('                5: invalid exitflag    6:  fzero(Exitflag)=6     7: invalid theta  ')
 
 

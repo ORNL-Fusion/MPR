@@ -4,8 +4,9 @@ disp(S10)
 
 %%derive distributions: #particles/unit cell and particle-surface angle
 %%as well as cumulative distributions of both 2D plots
-%%horizontal axis is y; vertical axis is x; 
-%%so that the sinusoidal function can be plotted on top
+
+%%Horizontal axis is x; vertical axis is y; axes need to match
+%%right-hand-rule!
 
 %%surface-traject intersection point
 xa=transpose(partlocal(:,1));

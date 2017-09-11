@@ -1,4 +1,5 @@
-%%RESEARCH PLAN:
+%% MPR Main, for studying erosion of rough surfaces
+%% A. Lasa & J. Coburn
 
 %%start with a sinusoidal surface in 2D (aligned valleys or mountains);
 %%parametrized by ratio Ax:fx, Ay:fy (amplitude):(1/frequency)
@@ -6,15 +7,15 @@
 %%launch particles from a fixed z0 (~1.5-2 max z-surf)
 %%and (x0,y0) randomly chosen or forming an uniform grid
 
-%%straight trajectories, forming an angle theta wrt z-axis, phi
-%%initial set of parameter scan: 
-%   A:f=0.1, 1.0, 10.0
-%   theta = 0, 30, 60
-%   phi = 0, (30,45,60?), 90
+%% straight trajectories, specified angular distribution & energy
+%%angle theta is wrt z-axis, phi wrt x-axis
+%%E.g., an initial set of parameter scan was performed: 
+%%   A:f=0.1, 1.0, 10.0
+%%   theta = 0, 30, 60
+%%   phi = 0, (30,45,60?), 90
+%% theta can also be given by a distribution (e.g., from PIC)
 
 %%display lines in this file from S1-S9 (if needed)
-
-
 
 %clear all values
 clear variables
@@ -28,48 +29,51 @@ addpath(outfolder);
 
 
 
-
 %%%%%%%%%%     DEFINE CASE     %%%%%%%%%%
 
 
 %%1-define surface
-Ax=0.1;      %oscilation amplitude in x
-fx=1.0;      %oscilation frequency in x 
-Ay=1.0;      %oscilation amplitude in y
+Ay=0.006;      %oscilation amplitude in y
 fy=1.0;      %oscilation frequency in y
+Ax=0.1*Ay;      %oscilation amplitude in x
+fx=1.0;      %oscilation frequency in x 
 
-surfxmin=-15.0*pi; %surface x-min
-surfxmax=15.0*pi;  %surface x-max
-surfymin=-15.0*pi; %surface y-min
-surfymax=15.0*pi;  %surface y-max
-
+surfxmin=-5.0*pi; %surface x-min
+surfxmax=5.0*pi;  %surface x-max
+surfymin=-5.0*pi; %surface y-min
+surfymax=5.0*pi;  %surface y-max
 
 
 
 %%2-define particles
 
 %trajectories
-phi=0.0;  %phi = angle wrt x-axis 0 < phi < pi/2
-dlt=pi/3.0; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
+phi=pi/4.0;    %phi = angle wrt x-axis 0 < phi < pi/2
+dlt=0.0; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
 th=pi-dlt ; %theta =angle wrt +z axis ; pi/2 < theta < pi
+distr='Boro88'; %distr = Curr85, Boro85, Boro88, Boro89, or blank. 
+% A different name (not implemented in zs_zp_intersect) or blank uses dlt & th
 
 %launching area
-initxmin=-10.0*pi; %x-min of initializing ('launching') particles
-initxmax=10.0*pi;  %x-max of initializing particles
-initymin=-10.0*pi; %y-min of initializing particles
-initymax=10.0*pi;  %y-max of initializing particles
+initxmin=-5.0*pi; %x-min of initializing ('launching') particles
+initxmax=0.0;  %x-max of initializing particles
+initymin=-5.0*pi; %y-min of initializing particles
+initymax=0.0;  %y-max of initializing particles
 
 %number of 'particles'
-NP=1200000;
-nsteps=6000; %resolution: NP/nsteps = npoints = number of surface grids
+%nsteps = average #impacts per cell, in a flat surface: i.e., represents statistics
+%npoints = number of surface grids: i.e., represents resolution
+NP=200000;
+nsteps=2000;
 npoints=floor(NP/nsteps);
+
 
 
 
 %%3-define materials (for Eckstein's fit formula)
 Tg='W'; %target material
-Pr='N'; %projectile 
-E0=100.0; %impact energy
+Pr='D'; %projectile 
+E0=250.0; %impact energy
 
 %%load erosion and reflection parameters
 Ecksteinfolder=[currentfolder,'/Eckstein'];
@@ -115,7 +119,7 @@ n2=0.9;
 sfile=[outfolder,'/Ax',num2str(Ax),'_Ay',num2str(Ay),'_phi',num2str(phi*180/pi),'_delta',num2str(dlt*180/pi),'.mat'];
 filename=sfile;
 
-save(filename,'Ax','fx','Ay','fy','NP','nsteps', 'phi','th', 'surfxmin','surfxmax','surfymin','surfymax','Tg','Pr');
+save(filename,'Ax','fx','Ay','fy','NP','nsteps', 'phi', 'th', 'surfxmin','surfxmax','surfymin','surfymax','Tg','Pr');
 
 run('zs_zp_intersect')
 
@@ -139,4 +143,4 @@ run('particle_emission')
 
 run('plot_sputtering_and_reflection')
 
-movefile('*.png','outfile/')
+movefile('*.png',outfolder)

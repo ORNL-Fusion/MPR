@@ -1,6 +1,8 @@
 %angle profile: search for points along y-axis, around x=xprofile 
 xprofile=pi/4.0;
 ip=0;
+yangleprof(1)=0;
+angleprofy(1)=0;
 for p = 1:NP
     if (xa(p)<(xprofile+pi/4.0) && xa(p)>(xprofile-pi/4.0))
         ip=ip+1;
@@ -11,6 +13,8 @@ end
 
 yprofile=pi/4.0;
 jp=0;
+xangleprof(1)=0;
+angleprofx(1)=0;
 for p = 1:NP
     if (ya(p)<(yprofile+pi/4.0) && ya(p)>(yprofile-pi/4.0))
         jp=jp+1;

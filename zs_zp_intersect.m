@@ -3,7 +3,7 @@ S4='Calculate intersection of surface and trajectory ';
 disp(S4)
 
 %initialize; increase range of dim2 if adding output to 'local_angle' 
-partglobal(1:NP,1:4)=0.0;
+partglobal(1:NP,1:5)=0.0;
 partlocal(1:NP,1:4)=0.0;
 
 
@@ -30,14 +30,49 @@ for p = 1:NP
     partglobal(p,1)=x0;
     partglobal(p,2)=y0;
     partglobal(p,3)=z0;
-    partglobal(p,4)=dlt*180/pi;
+
+%initiate angular distribution of th for each particle, based on a given analytical distribution
+currentfolder = pwd;
+distribFolder=[currentfolder, '/AngularDistributionFits'];
+
+if strcmp(distr,'Curr85')
+    %Curreli data set is in degrees, from theta 0 - 90
+    %theta in Curreli data corresponds to delta in this code
+    fitParamFile=[distribFolder,'/Curreli85'];
+    run(fitParamFile) %load double gaussian parametrization
+    run('vonNeumanAngle') %Use Von Neumann rejection method to generate values for delta
+elseif strcmp(distr,'Boro85')
+    %Borodkina data set is in degrees, from theta 0 - 90
+    %theta in Borodkina data corresponds to delta in this code
+    fitParamFile=[distribFolder,'/Borodkina85'];
+    run(fitParamFile) %load double gaussian parametrization
+    run('vonNeumanAngle') %Use Von Neumann rejection method to generate values for delta
+elseif strcmp(distr,'Boro88')
+    %Borodkina data set is in degrees, from theta 0 - 90
+    %theta in Borodkina data corresponds to delta in this code
+    fitParamFile=[distribFolder,'/Borodkina88'];
+    run(fitParamFile) %load double gaussian parametrization
+    run('vonNeumanAngle') %Use Von Neumann rejection method to generate values for delta
+elseif strcmp(distr,'Boro89')
+    %Borodkina data set is in degrees, from theta 0 - 90
+    %theta in Borodkina data corresponds to delta in this code
+    fitParamFile=[distribFolder,'/Borodkina89'];
+    run(fitParamFile) %load double gaussian parametrization
+    run('vonNeumanAngle') %Use Von Neumann rejection method to generate values for delta
+else
+    %fixed angle
+    partglobal(p,4)=dlt;
+    partglobal(p,5)=th;
+end
+    
+    
 
     %%given an analytical surface and particle trajectory, find the intersection
     %%point and angle wrt the surface normal
     %%save all output (local particle's values) as:
     %first index (p) = particle index
     %%component 1:3 = impact point; 4 = angle wrt surface normal
-    partlocal(p,:) = part_surf_local_angle(p,x0,y0,z0,phi,th,Ax,fx,Ay,fy);
+    partlocal(p,:) = part_surf_local_angle(p,x0,y0,z0,phi,partglobal(p,5),Ax,fx,Ay,fy);
 
     %run('local_angle')
     

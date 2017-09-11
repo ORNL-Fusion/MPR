@@ -7,7 +7,7 @@ disp(S30)
 %due to the way 3D surface plots auto-read axes from matrices, need to
 %transpose each [x,y] matrix. Do within plot to not double variable names
 
-%1-background: contour plot
+%%%%%%%%%%%%% 1-background: contour plot  %%%%%%%%%%%%
 S31='      ... 1: surface';
 disp(S31)
 
@@ -111,12 +111,39 @@ hold off;
 print('1d_cellnphi','-dpng')
 
 
-%2-angle
+
+%%%%%%%%%%%% 2-angle  %%%%%%%%%%%%
 S32='      ... 2: angle';
 disp(S32)
 
-S32a='      ...   a: at each impact point';
+
+S32a=['      ...   a: incoming (global) dlt angle for distrib', distr];
 disp(S32a)
+figure(nfig)
+nfig=nfig+1;
+
+contour(xg,yg,transpose(zg),1); %PLOT?
+colorbar('off');
+hold on;
+
+scatter(partglobal(:,1),partglobal(:,2),[],partglobal(:,4)*180/pi); 
+colorbar;
+caxis([0,90]); %180?
+%caxis([-max(max(-180/pi*pangle)),max(max(180/pi*pangle))]);
+
+axis equal;
+title('2a: incloming (global) dlt angle')
+xlabel('x')
+ylabel('y')
+zlabel('angle')
+hold off;
+
+print('2a_incomingdlt','-dpng')
+
+
+%2b-impact angle at each point
+S32b='      ...   b: at each impact point';
+disp(S32b)
 figure(nfig)
 nfig=nfig+1;
 
@@ -130,18 +157,18 @@ caxis([0,90]); %180?
 %caxis([-max(max(-180/pi*pangle)),max(max(180/pi*pangle))]);
 
 axis equal;
-title('2a: angle at each impact point')
+title('2b: angle at each impact point')
 xlabel('x')
 ylabel('y')
 zlabel('angle')
 hold off;
 
-print('2a_impactangle','-dpng')
+print('2b_impactangle','-dpng')
 
 
-%2b-average impact angle of each cell
-S32b='      ...   b: average impact angle of each cell';
-disp(S32b)
+%2c-average impact angle of each cell
+S32c='      ...   c: average impact angle of each cell';
+disp(S32c)
 figure(nfig)
 nfig=nfig+1;
 
@@ -156,64 +183,64 @@ caxis([0,90]);
 
 
 axis equal;
-title('2b:average impact angle of each cell')
+title('2c:average impact angle of each cell')
 xlabel('x')
 ylabel('y')
 zlabel('ave angle')
 hold off;
 
-print('2b_aveimpactangle','-dpng')
+print('2c_aveimpactangle','-dpng')
 
 
-%2c - angle profile (at x=5+/-0.5)
-S32c=['      ...   c: profile along x (at y=',num2str(yprofile), '+/-', num2str(0.5), ')'];
-disp(S32c)
+%2d - angle profile (at x=5+/-0.5)
+S32d=['      ...   d: profile along x (at y=',num2str(yprofile), '+/-', num2str(0.5), ')'];
+disp(S32d)
 figure(nfig)
 nfig=nfig+1;
 
 scatter(xangleprof,angleprofx*180/pi)
 axis ([surfxmin surfxmax 0 90]); %180?
-title('2c: profile of the angle along x')
+title('2d: profile of the angle along x')
 xlabel('x')
 ylabel('angle profile')
 hold off;
 
-print('2c_angleprofilex','-dpng')
+print('2d_angleprofilex','-dpng')
 
 
 
-%2d - angle profile (at y=5+/-0.5)
-S32d=['      ...   d: profile along y (at x=',num2str(xprofile), '+/-', num2str(0.5), ')'];
-disp(S32d)
+%2e - angle profile (at y=5+/-0.5)
+S32e=['      ...   e: profile along y (at x=',num2str(xprofile), '+/-', num2str(0.5), ')'];
+disp(S32e)
 figure(nfig)
 nfig=nfig+1;
 
 scatter(yangleprof,angleprofy*180/pi)
 axis ([surfymin surfymax 0 90]);    %180?
-title('2d: profile of the angle along y')
+title('2e: profile of the angle along y')
 xlabel('y')
 ylabel('angle profile')
 hold off;
 
-print('2d_angleprofiley','-dpng')
+print('2e_angleprofiley','-dpng')
 
 
-%2e-cumulative distribution of angles
-S32e='      ...   e: cumulative distribution of angles';
-disp(S32e)
+%2f-cumulative distribution of angles
+S32f='      ...   f: cumulative distribution of angles';
+disp(S32f)
 figure(nfig)
 nfig=nfig+1;
 
 plot(ai,adistr);
-title('2e: cumulative distribution of angles')
+title('2f: cumulative distribution of angles')
 xlabel('number of cells w/ loc angle')
 ylabel('local angle')
 
-print('2e_anglehistogram','-dpng')
+print('2f_anglehistogram','-dpng')
 
 
 
-%3-flux
+%%%%%%%%%%%%% 3-flux  %%%%%%%%%%%%
 S33='      ... 3: flux';
 disp(S33)
 
@@ -241,7 +268,7 @@ print('3a_Nimpact','-dpng')
 
 %pause %troubleshooting
 
-%10-local flux normalized
+%3b-local flux normalized
 S33b='      ...   b: normalized local flux';
 disp(S33b)
 figure(nfig)
