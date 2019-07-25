@@ -274,7 +274,7 @@ nfig=nfig+1;
 
 plot(xg,profncountsx)
 axis normal;
-title('3c: profile of number of impacts along x')
+title('3c: profile of number of impacts along x, normalized')
 xlabel('x')
 ylabel('#impacts')
 hold off;
@@ -291,7 +291,7 @@ nfig=nfig+1;
 
 plot(yg,profncountsy)
 axis normal;
-title('3d: profile of number of impacts along y')
+title('3d: profile of number of impacts along y, normalized')
 xlabel('y')
 ylabel('#impacts')
 hold off;

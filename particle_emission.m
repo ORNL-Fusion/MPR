@@ -46,8 +46,10 @@ RThout(1:npoints,1:npoints,:)=0.0; %theta angle of particles emitted by sputteri
 RThout_loc(1:npoints,1:npoints,:)=0.0;
 aveRThout(1:npoints,1:npoints)=0.0;
 aveRThout_loc(1:npoints,1:npoints)=0.0;
-RPhiout_loc(1:npoints,1:npoints)=0.0;
-RPhiout(1:npoints,1:npoints)=0.0; %phi angle of particles emitted by reflection
+RPhiout_loc(1:npoints,1:npoints,:)=0.0;
+RPhiout(1:npoints,1:npoints,:)=0.0; %phi angle of particles emitted by reflection
+aveRPhiout(1:npoints,1:npoints)=0.0;
+aveRPhiout_loc(1:npoints,1:npoints)=0.0;
 refl_redepos_p(1:4)=0.0;
 refl_redepos(1:npoints,1:npoints,:,1:4)=0.0;
 NredepSp(1:npoints,1:npoints)=0.0; %where sputtered particles are redeposited
@@ -112,17 +114,41 @@ for i=1:npoints
             
             %For each sputtered particle
             for p=1:nEmittSp
-                %define characteristics, wrt global coordinate system
-                SpThout(i,j,p)=sg_theta(i,j)+SpThout_loc(i,j,p);                
                 
+                %{
+                CORRECTION - TEST, AL 04.29.2019
                 
                 %if (sign(sg_theta(i,j))==sign(SpThout_loc(i,j,p))) %adding angles -> random, within (surface phi +/- pi/2)
                     %SpPhiout_loc(i,j,p)=(rand-0.5)*pi; %
                 %else %resting angles for SpThout -> random, within (surface phi +/- pi)
                     SpPhiout_loc(i,j,p)=(rand-0.5)*pi; %2*(pi/2+asin(cos(SpThout_loc(i,j,p))*tan(pi/2-sg_theta(i,j))));
                 %end
-                SpPhiout(i,j,p)=sg_phi(i,j)+SpPhiout_loc(i,j,p);
                 
+                %define characteristics, wrt global coordinate system
+                SpThout(i,j,p)=sg_theta(i,j)+SpThout_loc(i,j,p); 
+                SpPhiout(i,j,p)=sg_phi(i,j)+SpPhiout_loc(i,j,p);
+               %}
+                %{
+                APPROX as of 04.29.2019
+                SpPhiout_loc(i,j,p)=(rand-0.5)*2*pi;   
+                if (SpThout_loc(i,j,p)==0)
+                    SpPhiout(i,j,p)=sg_phi(i,j);
+                else
+                    SpPhiout(i,j,p)=sg_phi(i,j)+SpPhiout_loc(i,j,p);
+                end
+                SpThout(i,j,p)=sg_theta(i,j)+cos(SpPhiout_loc(i,j,p))*SpThout_loc(i,j,p);
+                %}
+                %TEST NEW APPROX, as of 05.01.2019
+                SpPhiout_loc(i,j,p)=(rand-0.5)*2*pi;
+                SpPhiout(i,j,p)=sg_phi(i,j)+SpThout_loc(i,j,p)*sin(SpPhiout_loc(i,j,p));
+                SpThout(i,j,p)=sg_theta(i,j)+SpThout_loc(i,j,p)*cos(SpPhiout_loc(i,j,p));
+                %END CORRECTION -- TEST, AL 04.29.2019 -- 05.01.2019
+               
+                if (SpPhiout(i,j,p)>pi)
+                    SpPhiout(i,j,p)=SpPhiout(i,j,p)-2*pi;
+                elseif (SpPhiout(i,j)<-pi)
+                    SpPhiout(i,j,p)=SpPhiout(i,j,p)+2*pi;
+                end
                 
                 %to take averages
                 aveSpThout_loc_tmp=aveSpThout_loc_tmp+SpThout_loc(i,j,p);
@@ -131,7 +157,8 @@ for i=1:npoints
                 aveSpPhiout_tmp=aveSpPhiout_tmp+SpPhiout(i,j,p);
                 
                 %intersection of sputtered particle with surface
-                sput_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),SpPhiout(i,j),SpThout(i,j,p),A,S,bx,by,z0, dx, dy);
+                event='sput';
+                sput_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),SpPhiout(i,j,p),SpThout(i,j,p),SpPhiout_loc(i,j,p),SpThout_loc(i,j,p),sg_phi(i,j),sg_theta(i,j),A,S,bx,by,z0, dx, dy,event);
                 sput_redepos(i,j,p,1:4)=sput_redepos_p(1:4);   %to store the data
                 xr=sput_redepos_p(1);   %for sorting redep positions
                 yr=sput_redepos_p(2);
@@ -247,68 +274,75 @@ for i=1:npoints
             %initialize
             RThout(i,j,1:nEmittR)=0.0;
             RThout_loc(i,j,1:nEmittR)=0.0;
+            RPhiout(i,j,1:nEmittR)=0.0;
+            RPhiout_loc(i,j,1:nEmittR)=0.0;
             refl_redepos(i,j,1:nEmittR,1:4)=0.0;
             aveRThout_loc_tmp=0.0;
             aveRThout_tmp=0.0;
+            aveRPhiout_loc_tmp=0.0;
+            aveRPhiout_tmp=0.0;
             
-            
-            % angle of particles emitted through reflection, wrt local
-            % normal to surf:
+            %cosine distribution -- only applied to sputtered particles
+            %APPLY HERE AS WELL UNTIL partglobal(i,j,p) available
             RThout_loc(i,j,1:nEmittR) = cosn_distrib(r1, n1, r2, n2, nEmittR, npoints);
+            
             
             %reflected energy and phi angle have a fixed value for each
             %cell, not distributions; define wrt global coordinate system
             REout(i,j)=E0*RE_loc(i,j)/RN_loc(i,j);
             Eout=REout(i,j); %needed?
             
-            %specular direction, new model:
-            % particles moves forward (in x): -pi/2 <= Phi_in <= pi/2
-            %if surface_phi also forward -> particle keeps moving in same direction
-            %else, apply pure specular reflection:
-
-            if (phi>=0 && sg_phi(i,j)>=0 && cos(sg_phi(i,j))>=0) 
-                RPhiout(i,j)=phi;
-                
-            elseif(phi<0 && sg_phi(i,j)<0 && cos(sg_phi(i,j))>0) 
-                RPhiout(i,j)=phi;
-                
-            else
-                phi_tmp=phi+pi*sign(sg_phi(i,j));
-                RPhiout(i,j)=2*sg_phi(i,j)-phi_tmp;
-            end
-            
-            RPhiout_loc(i,j)=RPhiout(i,j)-sg_phi(i,j);
-            
-            
-            %{ 
-            old model:
-            if (sign(phi)==sign(sg_phi(i,j)))
-                RPhiout_loc(i,j)=sg_phi(i,j)-phi;
-            else
-                RPhiout_loc(i,j)=pi+phi-sg_phi(i,j);
-            end
-          
-            
-            %}
-            
-            if (RPhiout(i,j)>pi)
-                RPhiout(i,j)=RPhiout(i,j)-2*pi;
-            elseif (RPhiout(i,j)<-pi)
-                RPhiout(i,j)=RPhiout(i,j)+2*pi;
-            end
-            
-            
+            %use multiple time in specular reflection:
+            %ths=sg_theta(i,j);
+            %phis=sg_phi(i,j);
+ 
             %For each reflected particle
             for p=1:nEmittR
+                %find local phi & theta angle:
+   
+                %---proper specular reflection model---%
+                %v_in=v_perp*n+v_par --> v_par=v_in-v_perp*n
+                %spec reflec: v_par equal, v_perp change sign -->
+                %v_out = v_par-v_perp*n = v_in-2*v_perp*n
+                %with: v_in=(sin(th_in)cos(phi_in),sin(th_in)sin(phi_in),cos(th_in))
+                %       n = (sin(th_s)cos(phi_s),sin(th_s)sin(phi_s),cos(th_s))
+                %{
+                can't apply model here cause I don't have the exact info of which
+                particles impacted on each location (th_in, phi_in)
+                system of equations to solve would be:
                 
-                %theta angle, wrt global coordinate system
-                RThout(i,j,p)=sg_theta(i,j)+RThout_loc(i,j,p);
+                phiin=phi
+                thin=partglobal(i,j,p)  -- THIS IS WHAT WE ARE MISSING
+                                        consider implementing in 'angle_profile_ave_and_distr'
+                
+                fct=2*(sin(ths)*cos(phis)*sin(thin)*cos(phiin)+sin(ths)*sin(phis)*sin(thin)*sin(phiin)+cos(ths)*cos(thin))                
+                sin(RThout(i,j,p))*cos(RPhiout(i,j,p)) = sin(thin)*cos(phiin)-2*fct*sin(ths)*cos(phis)
+                sin(RThout(i,j,p))*sin(RPhiout(i,j,p)) = sin(thin)*sin(phiin)-2*fct*sin(ths)*sin(phis)
+                cos(RThout(i,j,p)) = cos(thin)-2*fct*cos(ths)
+                %}
+                
+                %THUS, APPLY COSINE DISTRIBUTION
+                %TEST NEW APPROX for PHI, as of 05.01.2019
+                RPhiout_loc(i,j,p)=(rand-0.5)*2*pi;
+                RPhiout(i,j,p)=sg_phi(i,j)+RThout_loc(i,j,p)*sin(RPhiout_loc(i,j,p));
+                RThout(i,j,p)=sg_theta(i,j)+RThout_loc(i,j,p)*cos(RPhiout_loc(i,j,p));
+                
+                
+                if (RPhiout(i,j,p)>pi)
+                    RPhiout(i,j,p)=RPhiout(i,j,p)-2*pi;
+                elseif (RPhiout(i,j)<-pi)
+                    RPhiout(i,j,p)=RPhiout(i,j,p)+2*pi;
+                end
+                
                 %to take averages
                 aveRThout_loc_tmp=aveRThout_loc_tmp+RThout_loc(i,j,p);
                 aveRThout_tmp=aveRThout_tmp+RThout(i,j,p);
+                aveRPhiout_loc_tmp=aveRPhiout_loc_tmp+RPhiout_loc(i,j,p);
+                aveRPhiout_tmp=aveRPhiout_tmp+RPhiout(i,j,p);
                 
                 %intersection of reflected particle with surface
-                refl_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),RPhiout(i,j),RThout(i,j,p),A,S,bx,by,z0, dx, dy);
+                event='refl';
+                refl_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),RPhiout(i,j,p),RThout(i,j,p),RPhiout_loc(i,j,p),RThout_loc(i,j,p),sg_phi(i,j),sg_theta(i,j),A,S,bx,by,z0, dx, dy,event);
                 refl_redepos(i,j,p,1:4)=refl_redepos_p(1:4); %to store values
                 xr=refl_redepos_p(1); %for sorting redep positions
                 yr=refl_redepos_p(2);
@@ -379,6 +413,8 @@ for i=1:npoints
             
             aveRThout_loc(i,j)=aveRThout_loc_tmp/nEmittR;
             aveRThout(i,j)=aveRThout_tmp/nEmittR;
+            aveRPhiout_loc(i,j)=aveRPhiout_loc_tmp/nEmittR;
+            aveRPhiout(i,j)=aveRPhiout_tmp/nEmittR;
             
             %aveRThout_loc(i,j)=sum(RThout_loc(i,j,p),3)/nEmittR;
             %aveRThout(i,j)=sum(RThout(i,j,p),3)/nEmittR;
@@ -432,6 +468,8 @@ save(filename,'RThout','-append');
 save(filename,'RThout_loc','-append');
 save(filename,'aveRThout','-append');
 save(filename,'aveRThout_loc','-append');
+save(filename,'aveRPhiout','-append');
+save(filename,'aveRPhiout_loc','-append');
 save(filename,'RPhiout', '-append');
 save(filename,'RPhiout_loc', '-append');
 save(filename,'refl_redepos', '-append')

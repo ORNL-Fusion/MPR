@@ -42,13 +42,14 @@ for i = 1:npoints
             locang=avecellangle(i,j);
 
             %tanh works better at small angles; atan at large angles
+            %but atan values range in (-pi/2, pi/2) --> normalize
             
             %NOTE: atan argument (c3*locang+c4) should be near zero not to diverge -> 
             %as c3>0 and c4<0 in tabulated values -> use -c4 in our implementation
             if (locang<pi/4)
                 RN_angle(i,j)=c1+c2*tanh(c3*locang-c4);
             else
-             RN_angle(i,j)=c1+c2*atan(c3*locang-c4);
+                RN_angle(i,j)=c1+c2*atan(c3*locang-c4)/(pi/2.);
             end
         
         else %if not impacts in cell -> reflection yield = 0.0

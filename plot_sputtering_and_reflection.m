@@ -317,7 +317,7 @@ caxis([0,90]); %180?
 %caxis([-max(max(-180/pi*aveSpThout_loc)),max(max(180/pi*aveSpThout_loc))]);
 
 axis equal;
-title('6d: ave theta angle wrt surf norm')
+title('6d: ave theta  wrt surf normal of particles emitted by sputtering')
 xlabel('x')
 ylabel('y')
 zlabel('theta')
@@ -368,7 +368,7 @@ caxis([-max(max(-180/pi*aveSpPhiout_loc)),max(max(180/pi*aveSpPhiout_loc))]);
 
 
 axis equal;
-title('6f: phi wrt surf normal')
+title('6f: ave phi wrt surf normal of particles emitted by sputtering')
 xlabel('x')
 ylabel('y')
 zlabel('phi')
@@ -456,7 +456,6 @@ hold off;
 print('7c_avethetaemittrefl','-dpng')
 
 
-
 %7d-average theta angle of emitted particle, wrt surf normal
 
 S37d='      ...   d: ave theta wrt surf normal';
@@ -476,7 +475,7 @@ caxis([0,90]); %180?
 
 
 axis equal;
-title('7d: theta angle wrt surf norm')
+title('7d: ave theta wrt surf normal of particles emitted by reflection')
 xlabel('x')
 ylabel('y')
 zlabel('theta')
@@ -484,9 +483,8 @@ hold off;
 
 print('7d_avethetaemittrefl_nsurf','-dpng')
 
-
 %7e-phi of particles emitted by reflection
-S37e='      ...   e: Phi out';
+S37e='      ...   e: Average Phi out';
 disp(S37e)
 figure(nfig)
 nfig=nfig+1;
@@ -495,24 +493,23 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(180/pi*(RPhiout)));
+surf(xg,yg,transpose(180/pi*aveRPhiout));
 colorbar;
-%caxis([-180,180]);
-caxis([-max(max(-180/pi*RPhiout)),max(max(180/pi*RPhiout))]);
+caxis([-180,180]);
 
 axis equal;
-title('7e: phi of particles emitted by reflection')
+title('7e: average phi of particles emitted by reflection')
 xlabel('x')
 ylabel('y')
-zlabel('phi')
+zlabel('average phi')
 hold off;
 
 print('7e_avephiemittrefl','-dpng')
 
 
-%7f-average phi angle of emitted particle, wrt surf normal
+%7f-mean/average phi angle of emitted particle, wrt surf normal
 
-S37f='      ...   f: phi wrt surf normal';
+S37f='      ...   f: ave phi wrt surf normal';
 disp(S37f)
 figure(nfig)
 nfig=nfig+1;
@@ -521,14 +518,13 @@ contour(xg,yg,transpose(zg),1); %PLOT?
 colorbar('off');
 hold on;
 
-surf(xg,yg,transpose(180/pi*RPhiout_loc)); 
+surf(xg,yg,transpose(180/pi*aveRPhiout_loc)); 
 colorbar;
-%caxis([-180,180]); %180?
-caxis([-max(max(-180/pi*RPhiout_loc)),max(max(180/pi*RPhiout_loc))]);
-
+caxis([-180,180]); %180?
+%caxis([-max(max(-180/pi*aveRThout_loc)),max(max(180/pi*aveRThout_loc))]);
 
 axis equal;
-title('7f: phi wrt surf normal')
+title('7f: ave phi wrt surf normal of particles emitted by reflection')
 xlabel('x')
 ylabel('y')
 zlabel('phi')

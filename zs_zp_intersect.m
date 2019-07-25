@@ -123,7 +123,38 @@ for p = 1:NP
                 r=1; %end the Von Neumann rejection process
             else 
             end
-        end    
+        end
+    elseif (distr=='Chrobk')
+        %Chrobak data set is in degrees, from theta 0 - 90
+        %C. Chrobak et. al., Nucl. Fusion 58 (2018) 106019
+        %polar angle in Chrobak's paper data corresponds to delta in this code
+        ga1=0.0135; %quatruple gaussian fit values for data
+        gb1=82.87;  %to capture the multiple peaks correctly
+        gc1=0.8441;
+        ga2=0.07816;
+        gb2=80.57;
+        gc2=3.323;
+        ga3=0.06401; 
+        gb3=85.37;  
+        gc3=2.346;
+        ga4=0.04371;
+        gb4=75.2;
+        gc4=3.404;
+        %Use Von Neumann rejection method to generate values for delta
+        r = 0; %counter
+        while (r~=1)
+            dlttemp = 45*rand+45; %uniformly dist. random number for theta values between 45 and 90 degrees. 
+                                        %Cutoff value is pi/4 or 45
+                                        %degrees, to simplify search method
+            ftemp = rand*0.09; %uniformly dist. random number (0, 0.09), the upper limit for Chrobak's distribution
+            ChrobakDis = ga1*exp(-((dlttemp-gb1)/gc1)^2)+ga2*exp(-((dlttemp-gb2)/gc2)^2)+ga3*exp(-((dlttemp-gb3)/gc3)^2)+ga4*exp(-((dlttemp-gb4)/gc4)^2);
+            if (ftemp<=ChrobakDis)
+                partglobal(p,4)=dlttemp*pi/180;      %convert from degrees to radian, and set new value for delta for this code
+                partglobal(p,5)=pi-(dlttemp*pi/180); %convert from degrees to radian, and set new value for theta for this code
+                r=1; %end the Von Neumann rejection process
+            else 
+            end
+        end
     else
         partglobal(p,4)=dlt;
         partglobal(p,5)=th;
