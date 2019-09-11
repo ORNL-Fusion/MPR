@@ -28,47 +28,51 @@ addpath(outfolder);
 
 
 %%1-define surface
-A = 4;     %amplitude of trench height, in um
-S = 3;     %slope parameter, depends on FiB & material (should range from 1 to ~4 or 5)
-bx = 2;      %1/2 average trench length in x, in um
-by = 5;      %1/2 average trench length in y, in um
-surfxmin=-9; %surface x-min
-surfxmax=9;  %surface x-max
-surfymin=-9; %surface y-min
-surfymax=9;  %surface y-max
+A = 3;     %2 ;amplitude of trench height, in um
+%slope parameters; depends on FiB & material (should range from 1 to ~4 or 5) 
+SX1 = 3.5 ;       % downstream in X
+SX2 = 3.5 ;      % upstream in X
+SY1 = 3.5 ;       % downstream in Y
+SY2 = 3.5 ;      % upstream in Y
+bx = 15;      %1/2 average trench length in x, in um
+by = 15;      %1/2 average trench length in y, in um
+surfxmin=-20; %surface x-min
+surfxmax=24;  %surface x-max
+surfymin=-20; %surface y-min
+surfymax=24;  %surface y-max
 
 
 %%2-define particles
 
 %trajectories
-phi=0;  %phi = angle wrt x-axis 0 < phi < pi/2
-dlt=pi/2; %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
-th=pi-dlt ; %theta =angle wrt +z axis ; pi/2 < theta < pi
-distr='Boro88'; %Curr85, Boro85, Boro88, Boro89, or blankk. Replaces dlt & th if not blankk
+phi=pi/4.0;       %phi = angle wrt x-axis 0 < phi < pi/2
+dlt=1.5;        %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
+th=pi-dlt ;     %theta =angle wrt +z axis ; pi/2 < theta < pi
+distr='Chrobk';      %'Boro88'; %Curr85, Boro85, Boro88, Boro89, Chrobak or blank. Replaces dlt & th if not blank
 
 %launching area
-initxmin=-9; %x-min of initializing ('launching') particles
-initxmax=9;  %x-max of initializing particles
-initymin=-9; %y-min of initializing particles
-initymax=9;  %y-max of initializing particles
-z0=0.005; %specified height of initializing particles
+initxmin=-20;   %-9; %x-min of initializing ('launching') particles
+initxmax=16;     %x-max of initializing particles
+initymin=-20;   %y-min of initializing particles
+initymax=16;     %y-max of initializing particles
+z0=0.01; %specified height of initializing particles
 
 %number of 'particles'
-NP=300000; 
+NP=360000;
 %nsteps = average #impacts per cell, in a flat surface: i.e., represents statistics
-nsteps=1500; 
+nsteps=1800; %5000 
 %resolution = number of surface grids;
 npoints=floor(NP/nsteps); 
 
 %%For micro-trench studies, Np=300000, nsteps=1500 looks good
 
 %%3-define materials (for Eckstein's fit formula)
-Tg='Si'; %target material
-Pr='D'; %projectile 
-E0=100.0; %impact energy
+Tg='Si'; %target material ; e.g. 'W'
+Pr='D';  %projectile ; e.g. 'D'
+E0=100.0; %impact energy, eV
 
 %%load erosion and reflection parameters
-Ecksteinfolder=[currentfolder,'/Eckstein'];
+Ecksteinfolder=[currentfolder,'/Eckstein/temp'];
 addpath(Ecksteinfolder);
 
 ErosParamFile=[Ecksteinfolder,'/Eros_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV' ];
@@ -96,8 +100,11 @@ aL=(9*pi^2/128)^(1/3)*aB*(Zpr^(2/3)+Ztg^(2/3))^(-1/2);
 %reduced energies; to be placed inside loop if not monoenergetic
 eps_L=E0*(aL/(Zpr*Ztg*ec2))*(Mtg/(Mtg+Mpr));
 
-%coefficients for the cosine-like distribution of emitted particles' angle
-%f=r1*(cos(x))^n1+r2*(cos(x)^n2;
+%coefficients for the cosine-like distribution of theta angle
+%f=r1*(cos(x))^n1+r2*(cos(x))^n2;
+%applied to sputtered particles ; phi is random
+%currently also applied to reflected particles: see 'particle_emission'
+%for plans to use specular reflection for reflected particles 
 r1=1.5;
 r2=-1.0;
 n1=0.1;
@@ -134,5 +141,7 @@ run('reflection_RE')
 run('particle_emission')
 
 run('plot_sputtering_and_reflection')
+
+run('NSp_alongDiag')
 
 movefile('*.png','outfile/')

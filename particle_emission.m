@@ -66,7 +66,7 @@ for i=1:npoints
         %%%%%%%%%%% 1-Cell characteristics %%%%%%%%%%%
         xi=xg(i)+0.5*dx;
         yj=yg(j)+0.5*dy;
-        zk(i,j)=zs(xi,yj,A,S,bx,by);
+        zk(i,j)=zs(xi,yj,A,SX1,SX2,SY1,SY2,bx,by);
         
         
         %%%%%%%%%%%%%%%% 2-Sputtering %%%%%%%%%%%%%%%%
@@ -158,7 +158,7 @@ for i=1:npoints
                 
                 %intersection of sputtered particle with surface
                 event='sput';
-                sput_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),SpPhiout(i,j,p),SpThout(i,j,p),SpPhiout_loc(i,j,p),SpThout_loc(i,j,p),sg_phi(i,j),sg_theta(i,j),A,S,bx,by,z0, dx, dy,event);
+                sput_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),SpPhiout(i,j,p),SpThout(i,j,p),SpPhiout_loc(i,j,p),SpThout_loc(i,j,p),sg_phi(i,j),sg_theta(i,j),A,SX1,SX2,SY1,SY2,bx,by,z0, dx, dy,event);
                 sput_redepos(i,j,p,1:4)=sput_redepos_p(1:4);   %to store the data
                 xr=sput_redepos_p(1);   %for sorting redep positions
                 yr=sput_redepos_p(2);
@@ -342,7 +342,7 @@ for i=1:npoints
                 
                 %intersection of reflected particle with surface
                 event='refl';
-                refl_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),RPhiout(i,j,p),RThout(i,j,p),RPhiout_loc(i,j,p),RThout_loc(i,j,p),sg_phi(i,j),sg_theta(i,j),A,S,bx,by,z0, dx, dy,event);
+                refl_redepos_p=emitted_part_surf_intersec(xi,yj,zk(i,j),RPhiout(i,j,p),RThout(i,j,p),RPhiout_loc(i,j,p),RThout_loc(i,j,p),sg_phi(i,j),sg_theta(i,j),A,SX1,SX2,SY1,SY2,bx,by,z0, dx, dy,event);
                 refl_redepos(i,j,p,1:4)=refl_redepos_p(1:4); %to store values
                 xr=refl_redepos_p(1); %for sorting redep positions
                 yr=refl_redepos_p(2);

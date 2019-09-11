@@ -17,7 +17,6 @@ nszg(1:npoints,1:npoints)=1.0;
 
 
 %%xg, yg, zg = gridded version of the surface; 
-
 dx=xg(2)-xg(1);
 dy=yg(2)-yg(1);
 
@@ -27,9 +26,9 @@ for i = 1:npoints
     for j = 1:npoints
         xi=xg(i)+0.5*dx;
         yj=yg(j)+0.5*dy;
-        zk(i,j)=zs(xi,yj,A,S,bx,by);
-        nsxg(i,j)=-dzsx(xi,yj,A,S,bx,by);
-        nsyg(i,j)=-dzsy(xi,yj,A,S,bx,by);
+        zk(i,j)=zs(xi,yj,A,SX1,SX2,SY1,SY2,bx,by);
+        nsxg(i,j)=-dzsx(xi,yj,A,SX1,SX2,bx,by);
+        nsyg(i,j)=-dzsy(xi,yj,A,SY1,SY2,bx,by);
         %nszg(i,j)=1.0;
         sangles = surface_n_angles(nsxg(i,j),nsyg(i,j),nszg(i,j));
         sg_theta(i,j)=sangles(1);

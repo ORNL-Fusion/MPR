@@ -165,7 +165,7 @@ for p = 1:NP
     %%save all output (local particle's values) as:
     %first index (p) = particle index
     %%component 1:3 = impact point; 4 = angle wrt surface normal
-    partlocal(p,:) = part_surf_local_angle(p,x0,y0,z0,phi,partglobal(p,5),A,S,bx,by);
+    partlocal(p,:) = part_surf_local_angle(p,x0,y0,z0,phi,partglobal(p,5),A,SX1,SX2,SY1,SY2,bx,by);
 
     %run('local_angle')
     

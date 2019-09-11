@@ -1,4 +1,4 @@
-function y = emitted_part_surf_intersec(x0,y0,z0,phi,th,phi_loc,th_loc,phi_s,th_s,A,S,bx,by,initz0, dx, dy,event)
+function y = emitted_part_surf_intersec(x0,y0,z0,phi,th,phi_loc,th_loc,phi_s,th_s,A,SX1,SX2,SY1,SY2,bx,by,initz0, dx, dy,event)
 
 
 %use disp S7-S10
@@ -52,7 +52,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 l = (x0+dx)+(i-1)*dx;
                 r = (x0+dx)+i*dx;
                 try
-                    [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,S,bx,by),[l r]);
+                    [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,SX1,SX2,SY1,SY2,bx,by),[l r]);
                 catch
                     %disp('no solution found by fzero (err); set redep=6 & exitflag=-6, xs=x0, ys=y0');
                     %Sintrv=['       for case ', casename, ' sin(phi)==0 ; in interval ', num2str(intrv)];
@@ -81,7 +81,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 l = (y0+dy)+(i-1)*dy;
                 r = (y0+dy)+i*dy;
                 try
-                    [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,S,bx,by), [l r]);
+                    [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,SX1,SX2,SY1,SY2,bx,by), [l r]);
                 catch
                     %disp('no solution found by fzero (err); set redep=6 & exitflag=-6, xs=x0, ys=y0');
                     %Sintrv=['       for case ', casename, ' cos(phi)==0; in interval', num2str(intrv)];
@@ -109,7 +109,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 l = (y0+dy)+(i-1)*dy;
                 r = (y0+dy)+i*dy;
                 try
-                    [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,S,bx,by), [l r]);
+                    [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,SX1,SX2,SY1,SY2,bx,by), [l r]);
                 catch
                     %disp('no solution found by fzero (err); set redep=6 & exitflag=-6, xs=x0, ys=y0');
                     %Sintrv=['       for case ', casename, ' in interval ', num2str(intrv)];
@@ -134,7 +134,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             disp(Syexist)
         end
         
-        q=zs(xs,ys,A,S,bx,by);
+        q=zs(xs,ys,A,SX1,SX2,SY1,SY2,bx,by);
         
         dist=sqrt((xs-x0)^2+(ys-y0)^2+(q-z0)^2);
         
@@ -222,7 +222,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 l = (x0-dx)-i*dx;
                 r = (x0-dx)-(i-1)*dx;
                 try
-                    [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,S,bx,by), [l r]);
+                    [xs,fval,exitflag,outinfo]=fzero(@(x) zpx(x,x0,z0,th,phi)-zs(x,y0,A,SX1,SX2,SY1,SY2,bx,by), [l r]);
                 catch
                     %disp('no solution found by fzero (err); set redep=6 & exitflag=-6, xs=x0, ys=y0');
                     %Sintrv=['case ', casename, ' sin(phi)==0; in interval', num2str(intrv)];
@@ -250,7 +250,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 l = (y0+dy)+(i-1)*dy;
                 r = (y0+dy)+i*dy;
                 try
-                    [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,S,bx,by),[l r]);
+                    [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0,y,A,SX1,SX2,SY1,SY2,bx,by),[l r]);
                 catch
                     %disp('no solution found by fzero (err); set redep=6 & exitflag=-6, xs=x0, ys=y0');
                     %Sintrv=['for case ', casename, ' cos(phi)==0; in interval ', num2str(intrv)];
@@ -277,7 +277,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
                 l = (y0+dy)+(i-1)*dy;
                 r = (y0+dy)+i*dy;
                 try
-                    [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,S,bx,by),[l r]);
+                    [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,SX1,SX2,SY1,SY2,bx,by),[l r]);
                 catch
                     %disp('no solution found by fzero (err); set redep=6 & exitflag=-6, xs=x0, ys=y0');
                     %Sintrv=['for case ', casename, ' in interval ', num2str(intrv)];
@@ -302,7 +302,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             disp(Syexist)
         end
         
-        q=zs(xs,ys,A,S,bx,by);
+        q=zs(xs,ys,A,SX1,SX2,SY1,SY2,bx,by);
         
         dist=sqrt((xs-x0)^2+(ys-y0)^2+(q-z0)^2);
         
@@ -391,7 +391,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             l = (y0-dy)-i*dy;
             r = (y0-dy)-(i-1)*dy;
             try
-                [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,S,bx,by),[l r]);        
+                [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,SX1,SX2,SY1,SY2,bx,by),[l r]);        
             catch
                 %disp('no solution found by fzero (err); set redep=6 & exitflag=-6, xs=x0, ys=y0');
                 %Sintrv=['for case ', casename, ' sin(phi) & cos(phi) <0.0 ; in interval ', num2str(intrv)];
@@ -415,7 +415,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             disp(Syexist)
         end
         
-        q=zs(xs,ys,A,S,bx,by);
+        q=zs(xs,ys,A,SX1,SX2,SY1,SY2,bx,by);
         
         dist=sqrt((xs-x0)^2+(ys-y0)^2+(q-z0)^2);
         
@@ -503,7 +503,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             l = (y0-dy)-i*dy;
             r = (y0-dy)-(i-1)*dy;
             try
-                [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,S,bx,by), [l r]);        
+                [ys,fval,exitflag,outinfo]=fzero(@(y) zpy(y,y0,z0,th,phi)-zs(x0+(y-y0)/tan(phi),y,A,SX1,SX2,SY1,SY2,bx,by), [l r]);        
             catch
                 %disp('no solution found by fzero (err); set redep=6 & exitflag=-6, xs=x0, ys=y0');
                 %Sintrv=['for case ', casename, ' sin(phi) <0 & cos(phi) >0.0 ; in interval ', num2str(intrv)];
@@ -529,7 +529,7 @@ elseif (th>0 && th<pi) %tan(th)!=0
             disp(Syexist)
         end
         
-        q=zs(xs,ys,A,S,bx,by);
+        q=zs(xs,ys,A,SX1,SX2,SY1,SY2,bx,by);
         
         dist=sqrt((xs-x0)^2+(ys-y0)^2+(q-z0)^2);
         

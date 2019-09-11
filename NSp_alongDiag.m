@@ -1,7 +1,23 @@
+%2 ways to run this file:
+    % - at the end of a simulation, before clearing variables
+        %comment out definition of xg, yg, dx, dy, nfig=0
+    % - else, if all variables are not loaded, run 'main' until 'run case',
+    %   load the simulation output mat-file & then run this file
+    %keep the following lines uncommented:
+nfig=0;
+xg=linspace(surfxmin,surfxmax,npoints);
+yg=linspace(surfymin,surfymax,npoints);
+dx=xg(2)-xg(1);
+dy=yg(2)-yg(1);
+    
+   
+%variables that may change depending on case
+Lint=4.5; % range over which to average ; adjust so that Nint is a good number
+
+nfig=nfig+1;
 ip=0;
 jp=0;
 Spint(1:npoints)=0;
-Lint=5.0;
 Nint=npoints*Lint/(initxmax-initxmin);
 for i = 1:npoints
     jmin=max(1,i-Nint);
