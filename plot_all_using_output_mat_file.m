@@ -10,8 +10,8 @@ clear variables
 close all
 
 %load matlab file with all outputs:
-filepath='~/work/GA_D3D/DIIID_exp_2019_CSkinner/MPR_output/v8_post-experiment_geometry_and_angle/PrD_TgSi_E50eV_A3um_fitChrobak_phi45_postExpGeom/output_files';
-filename=[filepath,'/A3_bx15_by15_phi7.9577_delta85.9437.mat'];
+filepath='~/work/GA_D3D/DIIID_trench_exp_2019/MPR_output/v8_post-experiment_geometry_and_angle/PrD_TgSi_E50eV_A3um_fitChrobak_phi45_postExpGeom/output_files';
+filename=[filepath,'/Si_D_50eV_A3_bx15_by15_phi7.9577_delta85.9437.mat'];
 load(filename)
 
 %%%% output folder

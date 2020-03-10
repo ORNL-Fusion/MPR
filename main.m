@@ -140,10 +140,12 @@ n2=0.9;
 %%%%%%%%%%     RUN CASE     %%%%%%%%%%
 
 %create output file and save input data
-sfile=[outfolder,'/A',num2str(A),'_bx',num2str(bx),'_by',num2str(by),'_phi',num2str(phi*180/pi),'_delta',num2str(dlt*180/pi),'.mat'];
+sfile=[outfolder,'/',Tg,'_',Pr,'_',num2str(E0),'A',num2str(A),'_bx',num2str(bx),'_by',num2str(by),'_phi',num2str(phi*180/pi),'_delta',num2str(dlt*180/pi),'.mat'];
 filename=sfile;
 
-save(filename,'A','bx','by','NP','nsteps', 'phi','th', 'surfxmin','surfxmax','surfymin','surfymax','Tg','Pr');
+save(filename,'A','bx','by','NP','nsteps','npoints','phi','th', 'surfxmin','surfxmax','surfymin','surfymax','Tg','Pr');
+save(filename,'E0','initxmin','initymin','initxmax','initymax','z0','r1','r2','n1','n2', '-append')
+save(filename, 'SX1', 'RX1', 'BX1', 'CX1', 'SX2', 'RX2', 'BX2', 'CX2', 'SY1', 'RY1', 'BY1', 'CY1', 'SY2', 'RY2', 'BY2', 'CY2', '-append')
 
 run('zs_zp_intersect')
 
