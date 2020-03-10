@@ -11,7 +11,7 @@ qeros=0.0539;
 mu_eros=1.1977;
 Eth=27.77;
 
-%angular dependence for E=100eV
-f=5.4981;
-b=2.1396;
-c=1.0110; %0.7465;
+%angular dependence for E=50eV
+f=7.5874;
+b=4.1326;
+c=0.8655;
