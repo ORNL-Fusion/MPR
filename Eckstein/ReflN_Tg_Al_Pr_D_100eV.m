@@ -12,7 +12,7 @@ b2=-0.1777;
 b3=0.1523;
 b4=1.523;
 
-%%angular param for D->Al at appropriate E UNAVAILABLE: 
+%%angular param for D->Al at appropriate E unavailable: 
 %option 1, for E0=13333eV H -> Al  
 %c1=1.177;
 %c2=1.162;

@@ -2,7 +2,7 @@ Mtg=26.981;  %Al
 Mpr=2.014;   %D
 Ztg=13;   %Al
 Zpr=1;    %D
-%surface binding energy, eV
+%not used in RE or RN, so I'm commenting them out here
 %Esp=1.0; %for erosion (chemical erosion, used in angular dep.)
 %Esb=3.36; %for energy of particle emission  (thompson distribution)
 
@@ -12,8 +12,8 @@ b2=-0.1777;
 b3=0.1523;
 b4=1.523;
 
-%%angular param for D->Al at appropriate E UNAVAILABLE: 
-%option 1, for E0=13333eV D->Si  
+%%angular param for D->Al at appropriate E unavailable: 
+%option 1, for E0=13333eV H -> Al  
 %c1=1.177;
 %c2=1.162;
 %c3=2.026;

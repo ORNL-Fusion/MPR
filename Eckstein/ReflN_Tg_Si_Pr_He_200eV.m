@@ -4,7 +4,7 @@ Ztg=14;   %Si
 Zpr=2;    %He4
 %not used in RE or RN, so I'm commenting them out here
 %Esp=0.0;
-%Esb=4.70; %surface binding energy, eV
+%Esb=4.70; %surface binding energy, eV, for thompson distribution
 
 %energy param, for He -> Si  (b here  = a in Eckstein)
 b1=0.1664;

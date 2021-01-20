@@ -3,7 +3,7 @@ Mpr=4.0026;   %He4
 Ztg=14;   %Si
 Zpr=2;    %He4
 Esp=0.0;
-Esb=4.70; %surface binding energy, eV
+Esb=4.70; %surface binding energy, eV, for thompson distribution
 
 %energy dependence
 lambda=0.2524;
