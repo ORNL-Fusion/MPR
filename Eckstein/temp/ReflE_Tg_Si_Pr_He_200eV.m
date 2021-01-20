@@ -2,8 +2,9 @@ Mtg=28.085;  %Si
 Mpr=4.0026;   %He4
 Ztg=14;   %Si
 Zpr=2;    %He4
-Esp=0.0;
-Esb=4.70; %surface binding energy, eV, for thompson distribution
+%not used in RE or RN, so I'm commenting them out here
+%Esp=0.0;
+%Esb=4.70; %surface binding energy, eV, for thompson distribution
 
 %energy param, for He -> Si 
 a1=0.05765;
@@ -15,4 +16,4 @@ a4=1.319;
 d1=2.273;
 d2=2.171;
 d3=1.839;
-d4=3.442; %changed sign to avoid divergence
+d4=-3.442; 

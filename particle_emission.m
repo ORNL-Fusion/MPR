@@ -55,6 +55,13 @@ refl_redepos(1:npoints,1:npoints,:,1:4)=0.0;
 NredepSp(1:npoints,1:npoints)=0.0; %where sputtered particles are redeposited
 NredepR(1:npoints,1:npoints)=0.0;  %where sputtered particles are redeposited
 
+tf=strcmp(Pr,Tg); %compage target and projectile components
+if (tf==1) %if self-bombardment, skip Thompson distribution due to divergence
+            %moved warning here to avoid printing for each cell
+    disp('WARNING: you are running a case of self-sputtering/reflection (M1=M2)')
+    disp('         As implemented, the Thompson distrib would diverge -> fixed output E = Esb ')
+    disp('         This is completely made up, but it isnt used for anything, anyway')
+end
 
 for i=1:npoints
     for j=1:npoints

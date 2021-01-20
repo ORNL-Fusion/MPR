@@ -22,7 +22,6 @@ if (tf~=1) %NOT self-bombardment
 else
     RE_0=exp(a1*(eps_L)^a2)/(1+exp(a3*(eps_L)^a4));
 end
-       
 
 for i = 1:npoints
     for j = 1:npoints
@@ -33,15 +32,15 @@ for i = 1:npoints
 
             %tanh works better at small angles; atan at large angles
             
-            %NOTE: atan argument (d3*locang+d4) should be near zero not to diverge -> 
-            %as d3>0 and d4<0 in tabulated values -> use -d4 in our implementation
+            %NOTE: atan argument (d3*locang-d4) should be near zero not to diverge -> 
+            %as d3>0 and d4<0 in tabulated values -> use +d4 in our implementation
 
             if (locang<pi/4)
-                RE_angle(i,j)=d1+d2*tanh(d3*locang-d4);
+                RE_angle(i,j)=d1+d2*tanh(d3*locang+d4);
             else
-                RE_angle(i,j)=d1+d2*atan(d3*locang-d4);
+                RE_angle(i,j)=d1+d2*atan(d3*locang+d4);
             end
-        
+            
         else %if not impacts in cell -> reflection yield = 0.0
             RE_angle(i,j)=0.0;
         end

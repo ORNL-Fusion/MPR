@@ -2,8 +2,9 @@ Mtg=183.85;  %W
 Mpr=14.0;   %N
 Ztg=74.0;   %W
 Zpr=7.0;    %N
-Esp=1.0;
-Esb=8.68; %surface binding energy, eV
+%not used in RE or RN, so I'm commenting them out here
+%Esp=1.0;
+%Esb=8.68; %surface binding energy, eV
 
 %energy param, for N -> W
 b1=0.2595;

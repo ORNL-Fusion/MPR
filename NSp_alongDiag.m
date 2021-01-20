@@ -9,10 +9,6 @@ xg=linspace(surfxmin,surfxmax,npoints);
 yg=linspace(surfymin,surfymax,npoints);
 dx=xg(2)-xg(1);
 dy=yg(2)-yg(1);
-    
-   
-%variables that may change depending on case
-Lint=4.5; % range over which to average ; adjust so that Nint is a good number
 
 nfig=nfig+1;
 ip=0;

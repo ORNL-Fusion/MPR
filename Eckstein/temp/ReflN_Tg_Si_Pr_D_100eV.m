@@ -2,9 +2,9 @@ Mtg=28.085;  %Si
 Mpr=2.0141;   %D
 Ztg=14;   %Si
 Zpr=1;    %D
-%surface binding energy, eV
-Esp=1.0; %for erosion (chemical erosion, used in angular dep.)
-Esb=4.70; %for energy of particle emission  (thompson distribution)
+%not used in RE or RN, so I'm commenting them out here
+%Esp=1.0; %for erosion (chemical erosion, used in angular dep.)
+%Esb=4.70; %for energy of particle emission  (thompson distribution)
 
 %energy param, for D -> Si  
 %(b here  = a in Eckstein)
@@ -17,4 +17,4 @@ b4=1.535;
 c1=5.273;
 c2=5.018;
 c3=1.238;
-c4=3.091; %changed sign to avoid divergence
+c4=-3.091;

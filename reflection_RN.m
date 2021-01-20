@@ -28,11 +28,10 @@ cellFrefl(1:npoints,1:npoints)=0.0;
 tf=strcmp(Pr,Tg); %compage target and projectile components
 
 if (tf~=1) %NOT self-bombardment
-	      RN_0=b1*(eps_L)^b2/(1+b3*(eps_L)^b4);
+    RN_0=b1*(eps_L)^b2/(1+b3*(eps_L)^b4);
 else
-  RN_0=exp(b1*(eps_L)^b2)/(1+exp(b3*(eps_L)^b4));
+    RN_0=exp(b1*(eps_L)^b2)/(1+exp(b3*(eps_L)^b4));
 end
-       
 
 for i = 1:npoints
     for j = 1:npoints
@@ -44,14 +43,14 @@ for i = 1:npoints
             %tanh works better at small angles; atan at large angles
             %but atan values range in (-pi/2, pi/2) --> normalize
             
-            %NOTE: atan argument (c3*locang+c4) should be near zero not to diverge -> 
-            %as c3>0 and c4<0 in tabulated values -> use -c4 in our implementation
+            %NOTE: atan argument (c3*locang-c4) should be near zero not to diverge -> 
+            %as c3>0 and c4<0 in tabulated values -> use +c4 in our implementation
             if (locang<pi/4)
-                RN_angle(i,j)=c1+c2*tanh(c3*locang-c4);
+                RN_angle(i,j)=c1+c2*tanh(c3*locang+c4);
             else
-                RN_angle(i,j)=c1+c2*atan(c3*locang-c4)/(pi/2.);
+                RN_angle(i,j)=c1+c2*atan(c3*locang+c4)/(pi/2.);
             end
-        
+            
         else %if not impacts in cell -> reflection yield = 0.0
             RN_angle(i,j)=0.0;
         end

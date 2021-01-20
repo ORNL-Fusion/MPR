@@ -2,7 +2,8 @@ Mtg=183.85;  %W
 Mpr=2.01;   %D
 Ztg=74.0;   %W
 Zpr=1.0;    %D
-Esp=1.0;
+%not used in RE or RN, so I'm commenting them out here
+%Esp=1.0;
 
 %energy param, for D -> W
 b1=0.4453;

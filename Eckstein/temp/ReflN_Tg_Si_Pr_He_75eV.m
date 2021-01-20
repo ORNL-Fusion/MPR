@@ -2,9 +2,9 @@ Mtg=28.085;  %Si
 Mpr=4.0026;   %He4
 Ztg=14;   %Si
 Zpr=2;    %He4
-%surface binding energy, eV
-Esp=0.0;    %for reflection (chemical effects)
-Esb=4.70;   %for energy of particle emission  (thompson distribution)
+%not used in RE or RN, so I'm commenting them out here
+%Esp=0.0;    %for reflection (chemical effects)
+%Esb=4.70;   %for energy of particle emission  (thompson distribution)
 
 %energy param, for He -> Si  
 %(b here  = a in Eckstein)
@@ -17,4 +17,4 @@ b4=1.303;
 c1=5.273;
 c2=5.018;
 c3=1.238;
-c4=3.091; %changed sign to avoid divergence
+c4=-3.091; 

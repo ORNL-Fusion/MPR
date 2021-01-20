@@ -69,9 +69,9 @@ surfymax=24;  %surface y-max
 %%2-DEFINE INITIAL CONDITIONS OF PARTICLES 
 
 %trajectories
-phi=5/36.0;     %phi = angle wrt x-axis 0 < phi < pi/2 
-dlt=1.5;        %delta = angle wrt -z axis, (pointing to surface); 0<delta<pi/2
-th=pi-dlt ;     %theta =angle wrt +z axis ; pi/2 < theta < pi
+phi=5/36.0;     %phi [rad]= angle wrt x-axis 0 < phi < pi/2 
+dlt=1.5;        %delta [rad]= angle wrt -z axis, (pointing to surface); 0<delta<pi/2
+th=pi-dlt ;     %theta [rad]=angle wrt +z axis ; pi/2 < theta < pi
 distr='Chrobk';      %'Boro88'; %Curr85, Boro85, Boro88, Boro89, Chrobk, ChrobC or blank. Replaces dlt & th if not blank
                      % ChrobC is Chrobak shifted by -5deg (based on statement in Chrob NF, page 8
 
@@ -82,23 +82,27 @@ initymin=-21;   %y-min of initializing particles
 initymax=17;     %y-max of initializing particles
 z0=0.01; %specified height of initializing particles
 
+
 %number of 'particles'
 %For micro-trench studies, Np=300000, nsteps=1500 looks good
-NP=380000; 
+NP=190000; %380000; 
 %nsteps = average #impacts per cell, in a flat surface: i.e., represents statistics
-nsteps=1800; 
+nsteps=1900; 
 %resolution = number of surface grids;
 npoints=floor(NP/nsteps); 
 
+% range over which to average in NSp_alongDiag 
+% change depending on case, so that Nint=npoints*Lint/(initxmax-initxmin) is a integer 
+Lint= 3.8;  %4.5 ;
 
 %%3-DEFINE MATERIALS (for Eckstein's fit formula)
 
-Tg='Si'; %target material ; e.g. 'W'
-Pr='D';  %projectile ; e.g. 'D'
-E0=100.0; %impact energy, eV
+Tg='C'; %target material ; e.g. 'W'
+Pr='C';  %projectile ; e.g. 'D'
+E0=160.0; %impact energy, eV
 
 %%load erosion and reflection parameters
-Ecksteinfolder=[currentfolder,'/Eckstein/temp'];
+Ecksteinfolder=[currentfolder,'/Eckstein'];
 addpath(Ecksteinfolder);
 
 ErosParamFile=[Ecksteinfolder,'/Eros_','Tg_',Tg,'_Pr_',Pr, '_', num2str(E0), 'eV' ];

@@ -3,8 +3,8 @@ Mpr=12.01;   %C
 Ztg=14;   %Si
 Zpr=6;    %C
 %surface binding energy, eV
-Esp=4.70;    %for erosion (chemical erosion, used in angular dep.)
-Esb=4.70;   %for particle emission
+%Esp=4.70;    %for erosion (chemical erosion, used in angular dep.)
+%Esb=4.70;   %for particle emission
 
 %energy param, C->Si data not available ; use N -> Si parameters
 a1=-0.05303;
@@ -17,4 +17,4 @@ a4=0.1234;
 d1=0.9802;
 d2=0.9801;
 d3=2.861;
-d4=4.471; %changed sign to avoid divergence
+d4=-4.471; 

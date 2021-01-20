@@ -2,8 +2,9 @@ Mtg=28.085;  %Si
 Mpr=2.014;   %D
 Ztg=14;   %Si
 Zpr=1;    %D
-Esp=1.0;
-Esb=4.70; %surface binding energy, eV
+%not used in RE or RN, so I'm commenting them out here
+%Esp=1.0;
+%Esb=4.70; %surface binding energy, eV
 
 %energy param, for D -> Si 
 a1=0.1038;

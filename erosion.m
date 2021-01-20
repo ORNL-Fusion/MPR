@@ -22,7 +22,6 @@ w_eps=eps_L+0.1728*(eps_L)^(0.5)+0.008*(eps_L)^(0.1504);
 sn=0.5*log(1+1.2288*eps_L)/w_eps;
 Y_e=qeros*sn*((E0/Eth-1)^(mu_eros))/((lambda/w_eps)+(E0/Eth-1)^(mu_eros));
 
-
 save(filename,'Y_e', '-append');   
 
 %%1-initialize

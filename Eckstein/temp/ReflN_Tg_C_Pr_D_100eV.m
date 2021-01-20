@@ -2,8 +2,9 @@ Mtg=12.011;  %C
 Mpr=2.014;   %D
 Ztg=6;   %C
 Zpr=1;    %D
-Esp=1.0;
-Esb=7.41; %surface binding energy, eV
+%not used in RE or RN, so I'm commenting them out here
+%Esp=1.0;
+%Esb=7.41; %surface binding energy, eV
 
 %energy param, for D -> C  (b here  = a in Eckstein)
 b1=0.1526;
@@ -15,4 +16,4 @@ b4=1.287;
 c1=1.311;
 c2=1.119;
 c3=1.532;
-c4=2.545; %changed sign to avoid divergence
+c4=-2.545;

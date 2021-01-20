@@ -2,8 +2,9 @@ Mtg=12.011;  %C
 Mpr=4.0026;   %He4
 Ztg=6;   %C
 Zpr=2;    %He4
-Esp=0.0;
-Esb=7.41; %surface binding energy, eV
+%not used in RE or RN, so I'm commenting them out here
+%Esp=0.0;
+%Esb=7.41; %surface binding energy, eV
 
 %energy param, for He -> C 
 a1=0.01366;

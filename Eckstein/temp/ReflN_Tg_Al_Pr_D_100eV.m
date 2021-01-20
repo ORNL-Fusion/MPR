@@ -3,8 +3,8 @@ Mpr=2.014;   %D
 Ztg=13;   %Al
 Zpr=1;    %D
 %surface binding energy, eV
-Esp=1.0; %for erosion (chemical erosion, used in angular dep.)
-Esb=3.36; %for energy of particle emission  (thompson distribution)
+%Esp=1.0; %for erosion (chemical erosion, used in angular dep.)
+%Esb=3.36; %for energy of particle emission  (thompson distribution)
 
 %energy param, for D -> Al  (b here  = a in Eckstein)
 b1=0.2319;
@@ -23,4 +23,4 @@ b4=1.523;
 c1=5.273;
 c2=5.018;
 c3=1.238;
-c4=3.091; %changed sign to avoid divergence
+c4=-3.091; 
